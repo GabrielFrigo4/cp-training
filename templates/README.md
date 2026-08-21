@@ -14,7 +14,7 @@ Templates prontos e otimizados para competições e treinos rápidos.
 | **Python 3 / PyPy** | [`python/`](python/) | Template com `sys.stdin.readline` e recursion depth |
 | **Rust** | [`rust/`](rust/) | Projetos com Cargo e arquivos únicos para `rustc` |
 | **C** | [`c/`](c/) | Template minimalista em C |
-| **AtCoder Library (ACL)** | [`atcoder_lib/`](atcoder_lib/) | Headers completos da biblioteca oficial do AtCoder |
+| **AtCoder Library (ACL)** | [`atcoder-lib/`](atcoder-lib/) | Headers completos da biblioteca oficial do AtCoder |
 
 ---
 
@@ -23,11 +23,11 @@ Templates prontos e otimizados para competições e treinos rápidos.
 Para criar uma pasta de problema já com o template pronto:
 ```bash
 # C++23 (padrão)
-./tools/cp new practice/codeforces/normal/div-2/round-999 A B C D
+./tools/cpt new practice/codeforces/normal/div-2/round-999 A B C D
 
 # Python
-./tools/cp new practice/atcoder/beginner/abc-350 A B C --lang py
+./tools/cpt new practice/atcoder/beginner/abc-350 A B C --lang py
 
 # Rust
-./tools/cp new practice/cses/introductory weird-algorithm --lang rs
+./tools/cpt new practice/cses/introductory weird-algorithm --lang rs
 ```

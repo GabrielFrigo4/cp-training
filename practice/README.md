@@ -21,8 +21,8 @@ Problemas de treino organizados por plataformas e juízes online (Online Judges)
 
 ```bash
 # Criar um novo round do Codeforces Div 3 com problemas A, B, C, D, E
-./tools/cp new practice/codeforces/normal/div-3/round-1005 A B C D E
+./tools/cpt new practice/codeforces/normal/div-3/round-1005 A B C D E
 
 # Rodar e testar o problema A
-./tools/cp run practice/codeforces/normal/div-3/round-1005/A
+./tools/cpt run practice/codeforces/normal/div-3/round-1005/A
 ```

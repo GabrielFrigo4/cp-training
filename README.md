@@ -16,7 +16,7 @@
   <a href="#-métricas-e-performance">Métricas</a> •
   <a href="#-estatísticas-do-repositório">Estatísticas</a> •
   <a href="#-mapa-de-navegação">Navegação</a> •
-  <a href="#-ferramenta-cli-tools-cp">CLI Tooling</a> •
+  <a href="#-ferramenta-cli-tools-cpt">CLI Tooling</a> •
   <a href="#-compilação--configuração">Setup</a> •
   <a href="HANDBOOK.md">Algorithms Handbook</a>
 </p>
@@ -102,7 +102,7 @@ competitive-programming/
 ├── competitions/             # Códigos e cadernos de competições oficiais
 ├── practice/                 # Problemas categorizados por plataforma e tópicos
 ├── templates/                # Templates otimizados (C++23, PyPy, Rust, ACL Library)
-├── tools/                    # Ferramenta CLI de produtividade (tools/cp)
+├── tools/                    # Ferramenta CLI de produtividade (tools/cpt)
 ├── docs/                     # Guias de configuração (Vim, Emacs, Linux)
 ├── .vscode/                  # Tasks de build C++23 e launch debug
 ├── HANDBOOK.md               # Caderno consolidado de algoritmos e fórmulas com LaTeX
@@ -111,37 +111,37 @@ competitive-programming/
 
 ---
 
-## 🛠️ Ferramenta CLI (`tools/cp`)
+## 🛠️ Ferramenta CLI (`tools/cpt`)
 
-O repositório inclui um utilitário CLI em Python (`./tools/cp`) sem dependências externas:
+O repositório inclui um utilitário CLI em Python (`./tools/cpt`) sem dependências externas:
 
 ### 1. Criar novo Contest ou Problema
 ```bash
 # Cria uma pasta para o contest com problemas A, B, C, D e templates prontos
-./tools/cp new practice/codeforces/normal/div-2/round-1000 A B C D E
+./tools/cpt new practice/codeforces/normal/div-2/round-1000 A B C D E
 
 # Cria com template Python
-./tools/cp new practice/atcoder/beginner/abc-350 A B C --lang py
+./tools/cpt new practice/atcoder/beginner/abc-350 A B C --lang py
 ```
 
 ### 2. Compilar, Executar e Testar
 ```bash
 # Compila e roda o problema atual com o input.txt da pasta
-./tools/cp run practice/codeforces/normal/div-2/round-1000/A
+./tools/cpt run practice/codeforces/normal/div-2/round-1000/A
 
 # Se houver expected.txt, valida automaticamente o AC ou WA com diff
-./tools/cp test
+./tools/cpt test
 ```
 
 ### 3. Copiar Código para o Clipboard (1 comando)
 ```bash
 # Detecta wl-copy (Wayland), xclip (X11) ou clip.exe (WSL/Windows)
-./tools/cp clip practice/codeforces/normal/div-2/round-1000/A/main.cpp
+./tools/cpt clip practice/codeforces/normal/div-2/round-1000/A/main.cpp
 ```
 
 ### 4. Gerar Estatísticas em Tempo Real
 ```bash
-./tools/cp stats
+./tools/cpt stats
 ```
 
 ---

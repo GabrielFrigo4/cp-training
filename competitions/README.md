@@ -23,5 +23,5 @@ Repositório de soluções, cadernos de questões e materiais de estudo para com
 Você pode testar qualquer solução utilizando o helper CLI:
 ```bash
 # Exemplo: Rodar o problema A da Seletiva UFABC 2026
-./tools/cp run competitions/seletiva-ufabc/2026/A
+./tools/cpt run competitions/seletiva-ufabc/2026/A
 ```

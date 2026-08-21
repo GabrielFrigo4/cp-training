@@ -272,7 +272,7 @@ def scan_stats():
 
     for root, dirs, files in os.walk(REPO_ROOT):
         # Ignore git, hidden, legacy notes, docs
-        if any(p in root for p in [".git", "legacy-notes", "templates/atcoder_lib"]):
+        if any(p in root for p in [".git", "legacy-notes", "templates/atcoder-lib"]):
             continue
 
         rel_root = Path(root).relative_to(REPO_ROOT)

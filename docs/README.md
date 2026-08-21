@@ -6,8 +6,8 @@ Documentação de ambiente de desenvolvimento, dotfiles e configurações de pro
 
 ## 📁 Guias de Configuração
 
-- **[Vim / Neovim Configuration](vimrc_config.md)**: Configurações do `~/.vimrc` com auto-inserção de template, atalhos de compilação F9/F10 e relativenumber.
-- **[Emacs Configuration](emacs_config.md)**: Configuração compacta para o Emacs com templates automáticos e atalhos.
+- **[Vim / Neovim Configuration](vimrc-config.md)**: Configurações do `~/.vimrc` com auto-inserção de template, atalhos de compilação F9/F10 e relativenumber.
+- **[Emacs Configuration](emacs-config.md)**: Configuração compacta para o Emacs com templates automáticos e atalhos.
 - **[Legacy Notes & Apostila](legacy-notes/)**: Anotações e versões históricas da apostila em `.org`.
 
 ---

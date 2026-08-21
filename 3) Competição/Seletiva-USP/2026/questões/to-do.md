@@ -9,7 +9,7 @@
  - [x] G - Os Quatro Quatros
 
 ### 🟠 Médias
- - [ ] H - Mineração de Teotonium
+ - [x] H - Mineração de Teotonium
  - [ ] A - Scrabble
  - [ ] F - Rede de Esconderijos
 

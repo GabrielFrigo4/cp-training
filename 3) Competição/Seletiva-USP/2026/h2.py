@@ -28,8 +28,8 @@ def solve():
         m = int(input_data[ptr+3])
         ptr += 4
         
-        l_val = l + ((x - (l % m) + m) % m)
-        r_val = r - (((r % m) - x + m) % m)
+        l_val = l + (x - l) % m
+        r_val = r - (r - x) % m
         
         if l_val > r_val:
             ans[i] = 0
@@ -51,4 +51,3 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-

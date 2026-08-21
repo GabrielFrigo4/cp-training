@@ -1,0 +1,24 @@
+{
+    "C_Cpp.default.cppStandard": "c++23",
+    "C_Cpp.default.cStandard": "c17",
+    "C_Cpp.default.compilerPath": "/usr/bin/g++",
+    "files.associations": {
+        "*.hpp": "cpp",
+        "*.ipp": "cpp",
+        "dsu": "cpp",
+        "segtree": "cpp",
+        "fenwicktree": "cpp",
+        "lazysegtree": "cpp",
+        "math": "cpp",
+        "modint": "cpp",
+        "maxflow": "cpp",
+        "mincostflow": "cpp",
+        "scc": "cpp",
+        "string": "cpp",
+        "twosat": "cpp",
+        "convolution": "cpp",
+        "all": "cpp"
+    },
+    "editor.tabSize": 4,
+    "editor.insertSpaces": false
+}

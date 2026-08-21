@@ -1,0 +1,62 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "CP: Build Active C++23 File",
+            "command": "g++",
+            "args": [
+                "-std=c++23",
+                "-O2",
+                "-Wall",
+                "-Wextra",
+                "-Wconversion",
+                "-Wshadow",
+                "-fsanitize=undefined",
+                "-Wl,-z,stack-size=268435456",
+                "${file}",
+                "-o",
+                "${fileDirname}/main_bin"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": ["$gcc"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "CP: Run Test with Input (cp tool)",
+            "command": "python3",
+            "args": [
+                "${workspaceFolder}/tools/cp_tool.py",
+                "run",
+                "${fileDirname}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "CP: Copy Code to Clipboard",
+            "command": "python3",
+            "args": [
+                "${workspaceFolder}/tools/cp_tool.py",
+                "clip",
+                "${file}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        }
+    ]
+}

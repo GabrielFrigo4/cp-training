@@ -1,32 +1,66 @@
-# Prerequisites
-*.d
+# ==========================================
+# Competitive Programming .gitignore
+# ==========================================
 
-# Compiled Object files
-*.slo
-*.lo
+# Compiled Object and Library files
 *.o
 *.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
+*.slo
+*.lo
+*.a
+*.lib
 *.so
 *.dylib
 *.dll
+*.gch
+*.pch
 
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
+# Executables & Binaries
 *.exe
 *.out
 *.app
+main
+test
+sol
+solution
+a.out
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.venv/
+venv/
+.env
+
+# Rust
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# Test artifacts & Temporary files
+*.tmp
+*.temp
+*~
+output.txt
+actual.txt
+diff.txt
+*.log
+
+# Editors & IDEs
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.sublime-project
+*.sublime-workspace
+.cache/
+.clangd/
+*.swp
+*.swo
+
+# OS Generated
+.DS_Store
+Thumbs.db

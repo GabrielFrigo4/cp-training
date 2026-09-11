@@ -10,12 +10,13 @@
 [![Language](https://img.shields.io/badge/Rust-Edition_2021-DEA584?style=for-the-badge&logo=rust&logoColor=white)](templates/rust/)
 [![Linux](https://img.shields.io/badge/Platform-Linux%20%2F%20GCC-FCC624?style=for-the-badge&logo=linux&logoColor=black)](docs/)
 [![Handbook](https://img.shields.io/badge/Handbook-Algorithms%20%26%20DS-8A2BE2?style=for-the-badge&logo=gitbook&logoColor=white)](HANDBOOK.md)
+[![CI](https://img.shields.io/badge/CI-GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)](.github/workflows/ci.yml)
 
 <p align="center">
   <a href="#-visão-geral">Visão Geral</a> •
+  <a href="CONTRIBUTING.md">Setup & Contribuição</a> •
+  <a href="AGENTS.md">AI Agents</a> •
   <a href="#-métricas-e-performance">Métricas</a> •
-  <a href="#-estatísticas-do-repositório">Estatísticas</a> •
-  <a href="#-mapa-de-navegação">Navegação</a> •
   <a href="#-ferramenta-cli-tools-cpt">CLI Tooling</a> •
   <a href="#-compilação--configuração">Setup</a> •
   <a href="HANDBOOK.md">Algorithms Handbook</a>
@@ -97,14 +98,21 @@ O projeto é estruturado para proporcionar máxima produtividade no terminal Lin
 ## 🗂️ Arquitetura do Repositório
 
 ```text
-competitive-programming/
+cp-training/
 ├── algorithms/               # Biblioteca modular de algoritmos (DSU, SegTree, Dijkstra, etc.)
 ├── competitions/             # Códigos e cadernos de competições oficiais
 ├── practice/                 # Problemas categorizados por plataforma e tópicos
 ├── templates/                # Templates otimizados (C++23, PyPy, Rust, ACL Library)
 ├── tools/                    # Ferramenta CLI de produtividade (tools/cpt)
+├── tests/                    # Suíte de testes automatizados (CLI e compilação C++23)
 ├── docs/                     # Guias de configuração (Vim, Emacs, Linux)
+├── .githooks/                # Git hooks versionados (pre-commit, commit-msg, pre-push)
+├── .agents/                  # Workspace Customizations para AI Agents (rules e skills)
+├── .github/                  # CI/CD Workflows automatizados com GitHub Actions
 ├── .vscode/                  # Tasks de build C++23 e launch debug
+├── Makefile                  # Automações centralizadas (setup, test, lint, stats, clean)
+├── AGENTS.md                 # Guia e diretrizes canônicas para agentes de IA
+├── CONTRIBUTING.md           # Guia de setup rápido e fluxo de contribuição
 ├── HANDBOOK.md               # Caderno consolidado de algoritmos e fórmulas com LaTeX
 └── README.md                 # Visão geral e documentação principal
 ```

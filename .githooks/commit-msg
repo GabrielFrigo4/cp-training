@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# Git Commit-msg Hook for Conventional Commits
+# Enforces standard prefixes like feat, fix, solution, algo, refactor, etc.
+# ==============================================================================
+
+COMMIT_MSG_FILE="$1"
+FIRST_LINE=$(head -n 1 "$COMMIT_MSG_FILE")
+
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+YELLOW="\033[0;33m"
+NC="\033[0m"
+
+# Ignorar commits de merge automático
+if [[ "$FIRST_LINE" =~ ^Merge ]]; then
+    exit 0
+fi
+
+# Ignorar commits do tipo fixup! ou squash!
+if [[ "$FIRST_LINE" =~ ^(fixup|squash)! ]]; then
+    exit 0
+fi
+
+# Padrão Conventional Commits com suporte a tipos específicos de CP:
+# feat, fix, refactor, docs, style, test, chore, perf, ci, solution, algo
+CONVENTIONAL_REGEX="^(feat|fix|refactor|docs|style|test|chore|perf|ci|solution|algo)(\([a-zA-Z0-9_.\/-]+\))?!?: .+"
+
+if ! [[ "$FIRST_LINE" =~ $CONVENTIONAL_REGEX ]]; then
+    echo -e "${RED}[ERRO] Mensagem de commit não segue o padrão Conventional Commits!${NC}"
+    echo -e "Mensagem recebida: ${YELLOW}\"$FIRST_LINE\"${NC}\n"
+    echo -e "Formato esperado: ${GREEN}<tipo>(<escopo opcional>): <descrição>${NC}"
+    echo -e "Exemplos válidos:"
+    echo -e "  • ${GREEN}solution(codeforces): solve div2 1000 problem A${NC}"
+    echo -e "  • ${GREEN}algo(graphs): add dinic max flow implementation${NC}"
+    echo -e "  • ${GREEN}feat(tools): add multi-language support to cpt${NC}"
+    echo -e "  • ${GREEN}docs(handbook): update segment tree notes${NC}"
+    echo -e "  • ${GREEN}fix(makefile): fix stack-size linker flag on linux${NC}"
+    echo -e "\nTipos permitidos: ${YELLOW}feat, fix, refactor, docs, style, test, chore, perf, ci, solution, algo${NC}"
+    exit 1
+fi
+
+exit 0

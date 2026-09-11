@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# Git Pre-push Hook
+# Runs lint checks before pushing to remote repository
+# ==============================================================================
+
+set -e
+
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+CYAN="\033[0;36m"
+NC="\033[0m"
+
+echo -e "${CYAN}[pre-push] Executando verificação de integridade antes do envio...${NC}"
+
+# Se o Makefile existir na raiz, executa make lint
+REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+
+if [ -f "$REPO_ROOT/Makefile" ]; then
+    make -C "$REPO_ROOT" lint --no-print-directory
+else
+    echo -e "${GREEN}Makefile não encontrado, pulando pre-push checks.${NC}"
+fi
+
+echo -e "${GREEN}✔ [pre-push] Verificações concluídas! Prosseguindo com o push.${NC}"
+exit 0

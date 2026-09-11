@@ -1,3 +1,8 @@
+.POSIX:
+.SILENT:
+
+MAKEFLAGS += --no-print-directory -s
+
 win:
 	g++ -Wl,--stack=268435456 -std=c++23 -O2 main.cpp -o main
 	cat "./input.txt" | "./main.exe"

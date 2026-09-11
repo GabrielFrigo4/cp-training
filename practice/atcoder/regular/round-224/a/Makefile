@@ -1,3 +1,8 @@
+.POSIX:
+.SILENT:
+
+MAKEFLAGS += --no-print-directory -s
+
 CXX      = g++
 CXXFLAGS = -std=c++23 -O2 -Wall -Wextra -Wshadow -Wconversion -Wfloat-equal -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wl,-z,stack-size=268435456
 EXE      = ./main

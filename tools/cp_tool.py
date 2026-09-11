@@ -33,33 +33,38 @@ TEMPLATES = {
     "c": REPO_ROOT / "templates" / "c" / "standard" / "main.c",
 }
 
-DEFAULT_MAKEFILE = """CC := g++
-EXT := cpp
-TARGET := main
-INPUT := ./input.txt
-EXPECTED := ./expected.txt
+DEFAULT_MAKEFILE = """.POSIX:
+.SILENT:
 
-CXXFLAGS := -std=c++23 -O2 -Wall -Wextra -Wconversion -Wshadow -fsanitize=undefined
-STACK_FLAG := -Wl,-z,stack-size=268435456
+MAKEFLAGS += --no-print-directory -s
+
+CXX ?= c++
+EXT ?= cpp
+TARGET ?= main
+INPUT ?= ./input.txt
+EXPECTED ?= ./expected.txt
+
+CXXFLAGS ?= -std=c++23 -O2 -Wall -Wextra -Wconversion -Wshadow -fsanitize=undefined
+STACK_FLAG ?= -Wl,-z,stack-size=268435456
 
 .PHONY: all run test clean clip
 
 all: $(TARGET)
 
 $(TARGET): $(TARGET).$(EXT)
-\t$(CC) $(CXXFLAGS) $(STACK_FLAG) $< -o $@
+\t$(CXX) $(CXXFLAGS) $(STACK_FLAG) "$<" -o "$@"
 
 run: $(TARGET)
-\t@cat $(INPUT) | ./$(TARGET)
+\tcat "$(INPUT)" | ./"$(TARGET)"
 
 test:
-\t@python3 $(REPO_ROOT)/tools/cp_tool.py run .
+\tpython3 "$(REPO_ROOT)/tools/cp_tool.py" run .
 
 clip:
-\t@python3 $(REPO_ROOT)/tools/cp_tool.py clip $(TARGET).$(EXT)
+\tpython3 "$(REPO_ROOT)/tools/cp_tool.py" clip "$(TARGET).$(EXT)"
 
 clean:
-\trm -f $(TARGET) *.exe *.out
+\trm -f "$(TARGET)" *.exe *.out main_bin
 """
 
 def get_clipboard_command():

@@ -1,95 +1,93 @@
-# ==============================================================================
-# Competitive Programming Hub - Centralized Makefile
-# ==============================================================================
+.POSIX:
+.SILENT:
 
-CXX ?= g++
-CXXFLAGS ?= -std=c++23 -O2 -Wall -Wextra
+MAKEFLAGS += --no-print-directory -s
+
+# ----------------------------------------------------------------
+# Makefile: Competitive Computing Hub
+# ----------------------------------------------------------------
+
+CXX        ?= c++
+CXXFLAGS   ?= -std=c++23 -O2 -Wall -Wextra
 STACK_FLAG ?= -Wl,-z,stack-size=268435456
-PYTHON ?= python3
-
-# Colors for terminal output
-BOLD := \033[1m
-GREEN := \033[32m
-CYAN := \033[36m
-YELLOW := \033[33m
-RED := \033[31m
-RESET := \033[0m
+PYTHON     ?= python3
 
 .PHONY: all help setup setup-hooks test test-tool test-algorithms lint stats clean check-binaries
 
 all: help
 
-## help: Exibe os comandos disponíveis neste Makefile
+### ================================
+### HELP & DOCUMENTATION
+### ================================
 help:
-	@echo ""
-	@echo "$(BOLD)$(CYAN)⚡ Competitive Programming Hub - Centralized Makefile$(RESET)"
-	@echo "$(BOLD)Comandos disponíveis:$(RESET)"
-	@echo "  $(GREEN)make setup$(RESET)             Configura hooks do Git, permissões e valida dependências"
-	@echo "  $(GREEN)make setup-hooks$(RESET)       Ativa o diretório .githooks no git local"
-	@echo "  $(GREEN)make test$(RESET)              Executa toda a suíte de testes (CLI + Algoritmos)"
-	@echo "  $(GREEN)make test-tool$(RESET)         Executa testes unitários do CLI (tools/cp_tool.py)"
-	@echo "  $(GREEN)make test-algorithms$(RESET)   Compila e valida todos os componentes de algorithms/ em C++23"
-	@echo "  $(GREEN)make lint$(RESET)              Verifica sintaxe Python e integridade do repositório"
-	@echo "  $(GREEN)make stats$(RESET)             Exibe as estatísticas consolidadas do repositório"
-	@echo "  $(GREEN)make clean$(RESET)             Remove executáveis, binários compilados e arquivos temporários"
-	@echo ""
+	echo "Competitive Programming Hub — Centralized Automation"
+	echo ""
+	echo "Comandos disponíveis:"
+	echo "  make setup            - Configura hooks do Git, permissões e valida dependências"
+	echo "  make setup-hooks      - Ativa o diretório .githooks no git local"
+	echo "  make test             - Executa toda a suíte de testes (CLI + Algoritmos)"
+	echo "  make test-tool        - Executa testes unitários do CLI (tools/cp_tool.py)"
+	echo "  make test-algorithms  - Compila e valida todos os componentes de algorithms/ em C++23"
+	echo "  make lint             - Verifica sintaxe Python e integridade do repositório"
+	echo "  make stats            - Exibe as estatísticas consolidadas do repositório"
+	echo "  make clean            - Remove executáveis, binários compilados e arquivos temporários"
+	echo ""
 
-## setup: Configura hooks do git, permissões e dependências de ambiente
+### ================================
+### SETUP & ENVIRONMENT
+### ================================
 setup: setup-hooks
-	@echo "$(CYAN)[setup] Verificando ferramentas do sistema...$(RESET)"
-	@which $(CXX) >/dev/null 2>&1 && echo "  $(GREEN)✔$(RESET) Compilador C++: $$($(CXX) --version | head -n 1)" || echo "  $(YELLOW)⚠$(RESET) Compilador $(CXX) não encontrado!"
-	@which $(PYTHON) >/dev/null 2>&1 && echo "  $(GREEN)✔$(RESET) Interpretador Python: $$($(PYTHON) --version)" || echo "  $(YELLOW)⚠$(RESET) Python 3 não encontrado!"
-	@chmod +x tools/cpt tools/cptool 2>/dev/null || true
-	@echo "$(GREEN)✔ Setup do repositório concluído com sucesso!$(RESET)"
+	echo "Verificando ferramentas do sistema..."
+	command -v $(CXX) > "/dev/null" 2>&1 && echo "  [OK] Compilador C++: $$($(CXX) --version | head -n 1)" || echo "  [AVISO] Compilador $(CXX) não encontrado!"
+	command -v $(PYTHON) > "/dev/null" 2>&1 && echo "  [OK] Interpretador Python: $$($(PYTHON) --version)" || echo "  [AVISO] Python 3 não encontrado!"
+	chmod 0755 tools/cpt tools/cptool 2> "/dev/null" || true
+	echo "Setup do repositório concluído com sucesso!"
 
-## setup-hooks: Ativa os githooks versionados no git local
 setup-hooks:
-	@echo "$(CYAN)[setup-hooks] Configurando hooks do Git...$(RESET)"
-	@chmod +x .githooks/*
-	@git config core.hooksPath .githooks
-	@echo "$(GREEN)✔ core.hooksPath configurado para .githooks$(RESET)"
+	echo "Configurando hooks do Git..."
+	chmod 0755 .githooks/*
+	git config core.hooksPath .githooks
+	echo "core.hooksPath configurado para .githooks"
 
-## test: Roda todos os testes (CLI e compilação de algoritmos)
+### ================================
+### TESTING & VERIFICATION
+### ================================
 test: test-tool test-algorithms
-	@echo ""
-	@echo "$(BOLD)$(GREEN)✔ Todos os testes foram concluídos com êxito!$(RESET)"
+	echo "Todos os testes foram concluídos com êxito!"
 
-## test-tool: Roda os testes unitários do CLI cpt
 test-tool:
-	@echo "$(CYAN)[test] Executando testes unitários do CLI...$(RESET)"
-	@$(PYTHON) tests/test_cp_tool.py
+	echo "Executando testes unitários do CLI..."
+	$(PYTHON) tests/test_cp_tool.py
 
-## test-algorithms: Compila e valida todos os algoritmos em C++23
 test-algorithms:
-	@echo "$(CYAN)[test] Compilando e testando biblioteca de algoritmos (C++23)...$(RESET)"
-	@$(CXX) $(CXXFLAGS) tests/test_algorithms.cpp -o tests/test_algos_bin
-	@./tests/test_algos_bin
-	@rm -f tests/test_algos_bin
+	echo "Compilando e testando biblioteca de algoritmos (C++23)..."
+	$(CXX) $(CXXFLAGS) tests/test_algorithms.cpp -o tests/test_algos_bin
+	./tests/test_algos_bin
+	rm -f tests/test_algos_bin
 
-## lint: Valida sintaxe e higiene do repositório
 lint: check-binaries
-	@echo "$(CYAN)[lint] Verificando sintaxe de scripts Python...$(RESET)"
-	@$(PYTHON) -m py_compile tools/cp_tool.py tests/test_cp_tool.py
-	@echo "$(GREEN)✔ Sintaxe Python validada!$(RESET)"
+	echo "Verificando sintaxe de scripts Python..."
+	$(PYTHON) -m py_compile tools/cp_tool.py tests/test_cp_tool.py
+	echo "Sintaxe Python validada!"
 
-## check-binaries: Assegura que nenhum binário está rastreado pelo Git
 check-binaries:
-	@echo "$(CYAN)[lint] Verificando se há binários compilados rastreados pelo Git...$(RESET)"
-	@TRACKED_BINS=$$(git ls-files | grep -E '\.(exe|out|app|bin|o|obj|a|so|dylib)$$' || true); \
+	echo "Verificando se há binários compilados rastreados pelo Git..."
+	TRACKED_BINS=$$(git ls-files | grep -E '\.(exe|out|app|bin|o|obj|a|so|dylib)$$' || true); \
 	if [ -n "$$TRACKED_BINS" ]; then \
-		echo "$(RED)[ERRO] Binários rastreados encontrados:$$TRACKED_BINS$(RESET)"; \
+		echo "ERRO: Binários rastreados encontrados: $$TRACKED_BINS" >&2; \
 		exit 1; \
 	fi
-	@echo "$(GREEN)✔ Nenhum binário indevido rastreado no repositório.$(RESET)"
+	echo "Nenhum binário indevido rastreado no repositório."
 
-## stats: Exibe estatísticas de problemas resolvidos e categorias
 stats:
-	@$(PYTHON) tools/cp_tool.py stats
+	$(PYTHON) tools/cp_tool.py stats
 
-## clean: Remove binários e saídas temporárias
+### ================================
+### CLEANUP
+### ================================
 clean:
-	@echo "$(CYAN)[clean] Removendo arquivos temporários e binários compilados...$(RESET)"
-	@rm -f tests/test_algos_bin
-	@find . -type f \( -name "main_bin" -o -name "*.exe" -o -name "*.out" -o -name "a.out" -o -name "output.txt" -o -name "actual.txt" -o -name "diff.txt" \) -delete
-	@find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
-	@echo "$(GREEN)✔ Limpeza concluída.$(RESET)"
+	echo "Removendo arquivos temporários e binários compilados..."
+	rm -f tests/test_algos_bin
+	find . -type f \( -name "main_bin" -o -name "*.exe" -o -name "*.out" -o -name "a.out" -o -name "output.txt" -o -name "actual.txt" -o -name "diff.txt" \) -exec rm -f {} +
+	find . -type d -name "__pycache__" -exec rm -rf {} + 2> "/dev/null" || true
+	echo "Limpeza concluída."

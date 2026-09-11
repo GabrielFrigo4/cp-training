@@ -1,3 +1,8 @@
+.POSIX:
+.SILENT:
+
+MAKEFLAGS += --no-print-directory -s
+
 CC := g++
 EXT := cpp
 TARGET := main

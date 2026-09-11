@@ -1,99 +1,99 @@
-#!/usr/bin/env bash
-# ==============================================================================
-# Git Pre-commit Hook for Competitive Programming Hub
-# Protects against large files, binaries, merge conflicts and syntax errors.
-# ==============================================================================
+#!/usr/bin/env sh
+
+### ================================
+### PRE-COMMIT HOOK
+### ================================
 
 set -e
 
-RED="\033[0;31m"
-GREEN="\033[0;32m"
-YELLOW="\033[0;33m"
-CYAN="\033[0;36m"
-NC="\033[0m"
+### --------------------------------
+### Setup & Repository Root
+### --------------------------------
+_repo_root="$(git rev-parse --show-toplevel 2> "/dev/null" || pwd)"
+cd "${_repo_root}"
 
-echo -e "${CYAN}[pre-commit] Verificando integridade dos arquivos preparados...${NC}"
+echo "🔍 [pre-commit] Executing Competitive Computing quality gates..."
 
-# 1. Bloquear binários e executáveis acidentalmente commitados
-STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM)
-
-if [ -z "$STAGED_FILES" ]; then
-    exit 0
+### --------------------------------
+### Whitespace & Formatting Check
+### --------------------------------
+echo "  ↳ Checking whitespace and formatting (git diff --check)..."
+if ! git diff --check --cached; then
+	echo "❌ [pre-commit] Whitespace or EOF formatting error detected!" >&2
+	echo "   Run 'git diff --check --cached' to inspect issues." >&2
+	exit 1
 fi
 
-FORBIDDEN_EXTENSIONS="exe|out|app|bin|o|obj|a|so|dylib|gch|pch|class"
-FORBIDDEN_NAMES="^(main|test|sol|solution|a\.out|main_bin)$"
+### --------------------------------
+### Forbidden Binaries Check
+### --------------------------------
+echo "  ↳ Checking for compiled binaries in stage..."
+_staged_files=$(git diff --cached --name-only --diff-filter=ACM)
 
-HAS_FORBIDDEN_BINARY=0
-for FILE in $STAGED_FILES; do
-    BASENAME=$(basename "$FILE")
-    EXT="${FILE##*.}"
+if [ -n "${_staged_files}" ]; then
+	_forbidden_ext="exe|out|app|bin|o|obj|a|so|dylib|gch|pch|class"
+	_forbidden_names="^(main|test|sol|solution|a\.out|main_bin)$"
+	_has_binary=0
 
-    if echo "$BASENAME" | grep -Eq "$FORBIDDEN_NAMES"; then
-        echo -e "${RED}[ERRO] Arquivo executável detectado no commit: $FILE${NC}"
-        HAS_FORBIDDEN_BINARY=1
-    elif echo "$EXT" | grep -Eq "^($FORBIDDEN_EXTENSIONS)$"; then
-        echo -e "${RED}[ERRO] Extensão binária proibida detectada: $FILE${NC}"
-        HAS_FORBIDDEN_BINARY=1
-    fi
-done
+	for _file in ${_staged_files}; do
+		_base=$(basename "${_file}")
+		_ext="${_file##*.}"
 
-if [ "$HAS_FORBIDDEN_BINARY" -ne 0 ]; then
-    echo -e "${RED}Remova os binários do stage com 'git rm --cached <arquivo>' antes de commitar.${NC}"
-    exit 1
+		if echo "${_base}" | grep -E -q "${_forbidden_names}"; then
+			echo "❌ [pre-commit] Executable binary detected: ${_file}" >&2
+			_has_binary=1
+		elif echo "${_ext}" | grep -E -q "^(${_forbidden_ext})$"; then
+			echo "❌ [pre-commit] Binary extension detected: ${_file}" >&2
+			_has_binary=1
+		fi
+	done
+
+	if [ "${_has_binary}" -ne 0 ]; then
+		echo "   Run 'git rm --cached <file>' to unstage binaries." >&2
+		exit 1
+	fi
 fi
 
-# 2. Bloquear arquivos maiores que 5MB (5242880 bytes)
-MAX_SIZE=5242880
-LARGE_FILES=0
-for FILE in $STAGED_FILES; do
-    if [ -f "$FILE" ]; then
-        SIZE=$(stat -c%s "$FILE" 2>/dev/null || wc -c < "$FILE")
-        if [ "$SIZE" -gt "$MAX_SIZE" ]; then
-            echo -e "${RED}[ERRO] Arquivo excede o limite de 5MB ($(($SIZE / 1024 / 1024))MB): $FILE${NC}"
-            LARGE_FILES=1
-        fi
-    fi
-done
-
-if [ "$LARGE_FILES" -ne 0 ]; then
-    echo -e "${RED}Arquivos grandes não devem ser commitados no repositório.${NC}"
-    exit 1
+### --------------------------------
+### Large Files Protection (>5MB)
+### --------------------------------
+echo "  ↳ Enforcing file size limit (5MB)..."
+_max_size=5242880
+if [ -n "${_staged_files}" ]; then
+	for _file in ${_staged_files}; do
+		if [ -f "${_file}" ]; then
+			_size=$(stat -c "%s" "${_file}" 2> "/dev/null" || wc -c < "${_file}")
+			if [ "${_size}" -gt "${_max_size}" ]; then
+				echo "❌ [pre-commit] File exceeds 5MB limit: ${_file}" >&2
+				exit 1
+			fi
+		fi
+	done
 fi
 
-# 3. Bloquear marcadores de conflito de merge não resolvidos
-CONFLICT_PATTERNS="^[<]{7} |^[=]{7}$|^[>]{7} "
-for FILE in $STAGED_FILES; do
-    if [ -f "$FILE" ] && grep -Eq "$CONFLICT_PATTERNS" "$FILE" 2>/dev/null; then
-        echo -e "${RED}[ERRO] Marcador de conflito de merge detectado em: $FILE${NC}"
-        exit 1
-    fi
-done
+### --------------------------------
+### Python Scripts Syntax Check
+### --------------------------------
+echo "  ↳ Validating Python CLI tools (py_compile)..."
+python3 -m py_compile tools/cp_tool.py tests/test_cp_tool.py
 
-# 4. Validar sintaxe de scripts Python staged
-for FILE in $STAGED_FILES; do
-    if [[ "$FILE" == *.py ]] && [ -f "$FILE" ]; then
-        if command -v python3 >/dev/null 2>&1; then
-            if ! python3 -m py_compile "$FILE" 2>/dev/null; then
-                echo -e "${RED}[ERRO] Erro de sintaxe Python no arquivo: $FILE${NC}"
-                exit 1
-            fi
-        fi
-    fi
-done
-
-# 5. Soft-check de sintaxe C++ em arquivos staged (se g++ estiver disponível)
-if command -v g++ >/dev/null 2>&1; then
-    for FILE in $STAGED_FILES; do
-        if [[ "$FILE" =~ \.(cpp|hpp|cc|cxx)$ ]] && [ -f "$FILE" ]; then
-            # Testa a sintaxe sem gerar arquivo (-fsyntax-only)
-            if ! g++ -std=c++23 -fsyntax-only "$FILE" >/dev/null 2>&1; then
-                # Apenas um aviso amigável caso dependa de includes relativos locais
-                echo -e "${YELLOW}[AVISO] Verifique a compilação do arquivo C++: $FILE${NC}"
-            fi
-        fi
-    done
+### --------------------------------
+### Markdown Prettier Validation
+### --------------------------------
+if command -v prettier > "/dev/null" 2>&1; then
+	echo "  ↳ Validating staged Markdown files with Prettier..."
+	_unformatted_md=""
+	for _md_file in $(git diff --cached --name-only --diff-filter=d | grep '\.md$' || true); do
+		if [ -f "${_md_file}" ] && ! prettier --check "${_md_file}" > "/dev/null" 2>&1; then
+			_unformatted_md="${_unformatted_md} ${_md_file}"
+		fi
+	done
+	if [ -n "${_unformatted_md}" ]; then
+		echo "❌ [pre-commit] Unformatted Markdown files detected:${_unformatted_md}" >&2
+		echo "   Run 'prettier --write <file>'." >&2
+		exit 1
+	fi
 fi
 
-echo -e "${GREEN}✔ [pre-commit] Todas as verificações passaram com sucesso!${NC}"
+echo "✅ [pre-commit] All Competitive Computing quality gates passed cleanly!"
 exit 0

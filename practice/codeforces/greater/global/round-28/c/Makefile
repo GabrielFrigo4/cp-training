@@ -1,3 +1,8 @@
+.POSIX:
+.SILENT:
+
+MAKEFLAGS += --no-print-directory -s
+
 win:
 	g++ -std=c++23 -O2 main.cpp -o main
 	main < input.txt

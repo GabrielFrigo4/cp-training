@@ -20,17 +20,23 @@ all: help
 ### HELP & DOCUMENTATION
 ### ================================
 help:
-	echo "Competitive Programming Hub — Centralized Automation"
-	echo ""
-	echo "Comandos disponíveis:"
-	echo "  make setup            - Configura hooks do Git, permissões e valida dependências"
-	echo "  make setup-hooks      - Ativa o diretório .githooks no git local"
-	echo "  make test             - Executa toda a suíte de testes (CLI + Algoritmos)"
-	echo "  make test-tool        - Executa testes unitários do CLI (tools/cp_tool.py)"
-	echo "  make test-algorithms  - Compila e valida todos os componentes de algorithms/ em C++23"
-	echo "  make lint             - Verifica sintaxe Python e integridade do repositório"
-	echo "  make stats            - Exibe as estatísticas consolidadas do repositório"
-	echo "  make clean            - Remove executáveis, binários compilados e arquivos temporários"
+	cmd() { printf "    \033[36mmake %-22s\033[0m %s\n" "$$1" "$$2"; }; \
+	sec() { printf "\n  \033[1;33m%s\033[0m\n" "$$1"; }; \
+	sub() { printf "  \033[1;34m  ── %s ──\033[0m\n" "$$1"; }; \
+	printf "\n  \033[1;37mCompetitive Computing — Maratona de Programação & Automação\033[0m\n"; \
+	printf "  ============================================================\n"; \
+	sec "Ambiente & Toolchain:"; \
+	cmd "setup"          "Configura hooks do Git, permissões e valida compilador"; \
+	cmd "setup-hooks"    "Ativa o diretório .githooks no git local"; \
+	sec "Testes & Validação:"; \
+	cmd "test"           "Executa toda a suíte de testes (CLI + Algoritmos C++23)"; \
+	cmd "test-tool"      "Executa testes unitários do CLI (tools/cp_tool.py)"; \
+	cmd "test-algorithms" "Compila e valida todos os componentes de algorithms/"; \
+	sec "Qualidade & Estatísticas:"; \
+	cmd "lint"           "Verifica sintaxe Python e ausência de binários rastreados"; \
+	cmd "stats"          "Exibe estatísticas consolidadas de problemas e categorias"; \
+	sec "Limpeza:"; \
+	cmd "clean"          "Remove executáveis, binários compilados e temporários"; \
 	echo ""
 
 ### ================================

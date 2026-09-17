@@ -17,7 +17,13 @@ echo -e "${CYAN}[pre-push] Executando verificação de integridade antes do envi
 REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
 
 if [ -f "$REPO_ROOT/Makefile" ]; then
-    make -C "$REPO_ROOT" lint --no-print-directory
+    if command -v gmake > /dev/null 2>&1; then
+        gmake -C "$REPO_ROOT" lint --no-print-directory
+    elif make --version 2>&1 | grep -qi "gnu"; then
+        make -C "$REPO_ROOT" lint --no-print-directory
+    else
+        make -C "$REPO_ROOT" lint -s
+    fi
 else
     echo -e "${GREEN}Makefile não encontrado, pulando pre-push checks.${NC}"
 fi

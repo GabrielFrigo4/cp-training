@@ -1,43 +1,46 @@
-#!/usr/bin/env bash
-# ==============================================================================
-# Git Commit-msg Hook for Conventional Commits
-# Enforces standard prefixes like feat, fix, solution, algo, refactor, etc.
-# ==============================================================================
+#!/usr/bin/env sh
+# ----------------------------------------------------------------
+# Hook: Git Semantic Commit-Message Validator (Competitive Computing)
+# License: MIT (c) 2026 GabrielFrigo
+# ----------------------------------------------------------------
 
-COMMIT_MSG_FILE="$1"
-FIRST_LINE=$(head -n 1 "$COMMIT_MSG_FILE")
+set -e
 
-RED="\033[0;31m"
-GREEN="\033[0;32m"
-YELLOW="\033[0;33m"
-NC="\033[0m"
-
-# Ignorar commits de merge automático
-if [[ "$FIRST_LINE" =~ ^Merge ]]; then
-    exit 0
+_msg_file="${1:-}"
+if [ -z "${_msg_file}" ] || [ ! -f "${_msg_file}" ]; then
+	exit 0
 fi
 
-# Ignorar commits do tipo fixup! ou squash!
-if [[ "$FIRST_LINE" =~ ^(fixup|squash)! ]]; then
-    exit 0
+_clean_msg=$(grep -v '^[[:space:]]*#' "${_msg_file}" | tr '\n' ' ' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+
+case "${_clean_msg}" in
+	Merge*|Revert*|fixup!*|squash!*)
+		exit 0
+		;;
+esac
+
+if [ -z "${_clean_msg}" ]; then
+	echo "❌ [commit-msg] A mensagem de commit não pode estar vazia!" >&2
+	exit 1
 fi
 
-# Padrão Conventional Commits com suporte a tipos específicos de CP:
-# feat, fix, refactor, docs, style, test, chore, perf, ci, solution, algo
-CONVENTIONAL_REGEX="^(feat|fix|refactor|docs|style|test|chore|perf|ci|solution|algo)(\([a-zA-Z0-9_.\/-]+\))?!?: .+"
+_char_count=$(printf "%s" "${_clean_msg}" | wc -m)
+if [ "${_char_count}" -lt 8 ]; then
+	echo "❌ [commit-msg] Mensagem muito curta (mínimo de 8 caracteres)." >&2
+	exit 1
+fi
 
-if ! [[ "$FIRST_LINE" =~ $CONVENTIONAL_REGEX ]]; then
-    echo -e "${RED}[ERRO] Mensagem de commit não segue o padrão Conventional Commits!${NC}"
-    echo -e "Mensagem recebida: ${YELLOW}\"$FIRST_LINE\"${NC}\n"
-    echo -e "Formato esperado: ${GREEN}<tipo>(<escopo opcional>): <descrição>${NC}"
-    echo -e "Exemplos válidos:"
-    echo -e "  • ${GREEN}solution(codeforces): solve div2 1000 problem A${NC}"
-    echo -e "  • ${GREEN}algo(graphs): add dinic max flow implementation${NC}"
-    echo -e "  • ${GREEN}feat(tools): add multi-language support to cpt${NC}"
-    echo -e "  • ${GREEN}docs(handbook): update segment tree notes${NC}"
-    echo -e "  • ${GREEN}fix(makefile): fix stack-size linker flag on linux${NC}"
-    echo -e "\nTipos permitidos: ${YELLOW}feat, fix, refactor, docs, style, test, chore, perf, ci, solution, algo${NC}"
-    exit 1
+_pattern='^(feat|fix|refactor|docs|style|test|chore|perf|ci|solution|algo)(\([a-zA-Z0-9_.\/-]+\))?!?:[[:space:]]+.+'
+if ! echo "${_clean_msg}" | grep -E -q "${_pattern}"; then
+	echo "❌ [commit-msg] Convenção Conventional Commits violada!" >&2
+	echo "   Formato esperado:" >&2
+	echo "     <tipo>(<escopo opcional>): <descrição>" >&2
+	echo "   Exemplos válidos:" >&2
+	echo "     solution(codeforces): solve div2 1000 problem A" >&2
+	echo "     algo(graphs): add dinic max flow implementation" >&2
+	echo "     feat(tools): add multi-language support to cpt" >&2
+	echo "   Tipos permitidos: feat, fix, refactor, docs, style, test, chore, perf, ci, solution, algo" >&2
+	exit 1
 fi
 
 exit 0

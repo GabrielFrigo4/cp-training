@@ -1,32 +1,26 @@
-#!/usr/bin/env bash
-# ==============================================================================
-# Git Pre-push Hook
-# Runs lint checks before pushing to remote repository
-# ==============================================================================
+#!/usr/bin/env sh
+# ----------------------------------------------------------------
+# Hook: Git Pre-Push Quality Gate Runner (Competitive Computing)
+# License: MIT (c) 2026 GabrielFrigo
+# ----------------------------------------------------------------
 
 set -e
 
-RED="\033[0;31m"
-GREEN="\033[0;32m"
-CYAN="\033[0;36m"
-NC="\033[0m"
+printf "\033[36m[pre-push] Executando verificação de integridade antes do envio...\033[0m\n"
 
-echo -e "${CYAN}[pre-push] Executando verificação de integridade antes do envio...${NC}"
+_repo_root="$(git rev-parse --show-toplevel 2> "/dev/null" || pwd)"
 
-# Se o Makefile existir na raiz, executa make lint
-REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
-
-if [ -f "$REPO_ROOT/Makefile" ]; then
-    if command -v gmake > /dev/null 2>&1; then
-        gmake -C "$REPO_ROOT" lint --no-print-directory
-    elif make --version 2>&1 | grep -qi "gnu"; then
-        make -C "$REPO_ROOT" lint --no-print-directory
-    else
-        make -C "$REPO_ROOT" lint -s
-    fi
+if [ -f "${_repo_root}/Makefile" ]; then
+	if command -v gmake > "/dev/null" 2>&1; then
+		gmake -C "${_repo_root}" lint --no-print-directory
+	elif make --version 2>&1 | grep -qi "gnu"; then
+		make -C "${_repo_root}" lint --no-print-directory
+	else
+		make -C "${_repo_root}" lint -s
+	fi
 else
-    echo -e "${GREEN}Makefile não encontrado, pulando pre-push checks.${NC}"
+	printf "\033[32mMakefile não encontrado, pulando pre-push checks.\033[0m\n"
 fi
 
-echo -e "${GREEN}✔ [pre-push] Verificações concluídas! Prosseguindo com o push.${NC}"
+printf "\033[32m✔ [pre-push] Verificações concluídas! Prosseguindo com o push.\033[0m\n"
 exit 0

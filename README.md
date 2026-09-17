@@ -116,7 +116,7 @@ O repositório inclui um utilitário CLI em Python (`./tools/cpt`) sem dependên
 
 ### 1. Criar novo Contest ou Problema
 
-```bash
+```sh
 # Cria uma pasta para o contest com problemas A, B, C, D e templates prontos
 ./tools/cpt new practice/codeforces/normal/div-2/round-1000 A B C D E
 
@@ -126,7 +126,7 @@ O repositório inclui um utilitário CLI em Python (`./tools/cpt`) sem dependên
 
 ### 2. Compilar, Executar e Testar
 
-```bash
+```sh
 # Compila e roda o problema atual com o input.txt da pasta
 ./tools/cpt run practice/codeforces/normal/div-2/round-1000/A
 
@@ -136,14 +136,14 @@ O repositório inclui um utilitário CLI em Python (`./tools/cpt`) sem dependên
 
 ### 3. Copiar Código para o Clipboard (1 comando)
 
-```bash
+```sh
 # Detecta wl-copy (Wayland), xclip (X11) ou clip.exe (WSL/Windows)
 ./tools/cpt clip practice/codeforces/normal/div-2/round-1000/A/main.cpp
 ```
 
 ### 4. Gerar Estatísticas em Tempo Real
 
-```bash
+```sh
 ./tools/cpt stats
 ```
 
@@ -153,7 +153,7 @@ O repositório inclui um utilitário CLI em Python (`./tools/cpt`) sem dependên
 
 ### C++23 (GCC)
 
-```bash
+```sh
 g++ -std=c++23 -O2 -Wall -Wextra -Wconversion -Wshadow -fsanitize=undefined \
     -Wl,-z,stack-size=268435456 main.cpp -o main
 ```

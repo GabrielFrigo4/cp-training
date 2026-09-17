@@ -1,7 +1,6 @@
-<div align="center">
-
 # ⚡ Competitive Programming Hub
-**Algorithms, Contest Solutions, Templates & Automation for Competitive Programming**
+
+> **Algorithms, Contest Solutions, Templates & Automation for Competitive Programming**
 
 [![Codeforces](https://img.shields.io/badge/Codeforces-Gerbunte-1F8ACB?style=for-the-badge&logo=codeforces&logoColor=white)](https://codeforces.com/profile/Gerbunte)
 [![GitHub](https://img.shields.io/badge/GitHub-GabrielFrigo4-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/GabrielFrigo4)
@@ -12,19 +11,9 @@
 [![Handbook](https://img.shields.io/badge/Handbook-Algorithms%20%26%20DS-8A2BE2?style=for-the-badge&logo=gitbook&logoColor=white)](HANDBOOK.md)
 [![CI](https://img.shields.io/badge/CI-GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)](.github/workflows/ci.yml)
 
-<p align="center">
-  <a href="#-visão-geral">Visão Geral</a> •
-  <a href="CONTRIBUTING.md">Setup & Contribuição</a> •
-  <a href="AGENTS.md">AI Agents</a> •
-  <a href="#-métricas-e-performance">Métricas</a> •
-  <a href="#-ferramenta-cli-tools-cpt">CLI Tooling</a> •
-  <a href="#-compilação--configuração">Setup</a> •
-  <a href="HANDBOOK.md">Algorithms Handbook</a>
-</p>
+[Visão Geral](#-visão-geral) • [Setup & Contribuição](CONTRIBUTING.md) • [AI Agents](AGENTS.md) • [Métricas](#-métricas-e-performance) • [CLI Tooling](#-ferramenta-cli-tools-cpt) • [Setup](#-compilação--configuração) • [Algorithms Handbook](HANDBOOK.md)
 
 ---
-
-</div>
 
 ## 📌 Visão Geral
 
@@ -73,25 +62,27 @@ O projeto é estruturado para proporcionar máxima produtividade no terminal Lin
 ```
 
 ### 🏆 Competições & Maratonas
-| Evento | Categoria | Diretório | Soluções / Conteúdo |
-|---|---|:---:|:---:|
-| **ICPC** | Maratona SBC (Fase Zero & Regional) | [`competitions/icpc/`](competitions/icpc/) | 2024, 2025 |
-| **Seletiva USP** | Seletiva IME-USP | [`competitions/seletiva-usp/`](competitions/seletiva-usp/) | 2024, 2025, 2026 + Guia de Dificuldade |
-| **OBI-UNICAMP** | Olimpíada Brasileira de Informática | [`competitions/obi-unicamp/`](competitions/obi-unicamp/) | 2023, 2024 (Fases 1, 2 e 3) |
-| **Seletiva UFABC** | Seletiva Maratona UFABC | [`competitions/seletiva-ufabc/`](competitions/seletiva-ufabc/) | 2026 |
-| **MFP** | Maratona Feminina de Programação | [`competitions/mfp/`](competitions/mfp/) | 2025 |
-| **Advent of Code** | Desafios Anuais de Lógica | [`competitions/advent-of-code/`](competitions/advent-of-code/) | 2024 (Day 9, etc.) |
-| **Layers** | Desafios & Hackathons | [`competitions/layers/`](competitions/layers/) | 2024, 2025, Desafios |
+
+| Evento             | Categoria                           |                           Diretório                            |          Soluções / Conteúdo           |
+| ------------------ | ----------------------------------- | :------------------------------------------------------------: | :------------------------------------: |
+| **ICPC**           | Maratona SBC (Fase Zero & Regional) |           [`competitions/icpc/`](competitions/icpc/)           |               2024, 2025               |
+| **Seletiva USP**   | Seletiva IME-USP                    |   [`competitions/seletiva-usp/`](competitions/seletiva-usp/)   | 2024, 2025, 2026 + Guia de Dificuldade |
+| **OBI-UNICAMP**    | Olimpíada Brasileira de Informática |    [`competitions/obi-unicamp/`](competitions/obi-unicamp/)    |      2023, 2024 (Fases 1, 2 e 3)       |
+| **Seletiva UFABC** | Seletiva Maratona UFABC             | [`competitions/seletiva-ufabc/`](competitions/seletiva-ufabc/) |                  2026                  |
+| **MFP**            | Maratona Feminina de Programação    |            [`competitions/mfp/`](competitions/mfp/)            |                  2025                  |
+| **Advent of Code** | Desafios Anuais de Lógica           | [`competitions/advent-of-code/`](competitions/advent-of-code/) |           2024 (Day 9, etc.)           |
+| **Layers**         | Desafios & Hackathons               |         [`competitions/layers/`](competitions/layers/)         |          2024, 2025, Desafios          |
 
 ### 🎯 Treino por Plataforma
-| Plataforma | Divisões / Categorias | Diretório |
-|---|---|:---:|
-| **Codeforces** | Div 1, Div 2, Div 3, Div 4, Edu, Global, Special (Good Bye, Hello) | [`practice/codeforces/`](practice/codeforces/) |
-| **AtCoder** | ABC (Beginner), ARC (Regular), AGC (Grand), AHC (Heuristic) | [`practice/atcoder/`](practice/atcoder/) |
-| **Virtual Judge** | Simulados individuais e listas temáticas | [`practice/vjudge/`](practice/vjudge/) |
-| **LeetCode** | Dynamic Programming, Graphs, Data Structures | [`practice/leetcode/`](practice/leetcode/) |
-| **CSES** | CSES Problem Set | [`practice/cses/`](practice/cses/) |
-| **Diversos & Aulas** | Aulas GRUB (DP Clássico), Programação Estruturada, Criações | [`practice/misc/`](practice/misc/) |
+
+| Plataforma           | Divisões / Categorias                                              |                   Diretório                    |
+| -------------------- | ------------------------------------------------------------------ | :--------------------------------------------: |
+| **Codeforces**       | Div 1, Div 2, Div 3, Div 4, Edu, Global, Special (Good Bye, Hello) | [`practice/codeforces/`](practice/codeforces/) |
+| **AtCoder**          | ABC (Beginner), ARC (Regular), AGC (Grand), AHC (Heuristic)        |    [`practice/atcoder/`](practice/atcoder/)    |
+| **Virtual Judge**    | Simulados individuais e listas temáticas                           |     [`practice/vjudge/`](practice/vjudge/)     |
+| **LeetCode**         | Dynamic Programming, Graphs, Data Structures                       |   [`practice/leetcode/`](practice/leetcode/)   |
+| **CSES**             | CSES Problem Set                                                   |       [`practice/cses/`](practice/cses/)       |
+| **Diversos & Aulas** | Aulas GRUB (DP Clássico), Programação Estruturada, Criações        |       [`practice/misc/`](practice/misc/)       |
 
 ---
 
@@ -124,6 +115,7 @@ cp-training/
 O repositório inclui um utilitário CLI em Python (`./tools/cpt`) sem dependências externas:
 
 ### 1. Criar novo Contest ou Problema
+
 ```bash
 # Cria uma pasta para o contest com problemas A, B, C, D e templates prontos
 ./tools/cpt new practice/codeforces/normal/div-2/round-1000 A B C D E
@@ -133,6 +125,7 @@ O repositório inclui um utilitário CLI em Python (`./tools/cpt`) sem dependên
 ```
 
 ### 2. Compilar, Executar e Testar
+
 ```bash
 # Compila e roda o problema atual com o input.txt da pasta
 ./tools/cpt run practice/codeforces/normal/div-2/round-1000/A
@@ -142,12 +135,14 @@ O repositório inclui um utilitário CLI em Python (`./tools/cpt`) sem dependên
 ```
 
 ### 3. Copiar Código para o Clipboard (1 comando)
+
 ```bash
 # Detecta wl-copy (Wayland), xclip (X11) ou clip.exe (WSL/Windows)
 ./tools/cpt clip practice/codeforces/normal/div-2/round-1000/A/main.cpp
 ```
 
 ### 4. Gerar Estatísticas em Tempo Real
+
 ```bash
 ./tools/cpt stats
 ```
@@ -157,12 +152,14 @@ O repositório inclui um utilitário CLI em Python (`./tools/cpt`) sem dependên
 ## ⚙️ Compilação & Configuração
 
 ### C++23 (GCC)
+
 ```bash
 g++ -std=c++23 -O2 -Wall -Wextra -Wconversion -Wshadow -fsanitize=undefined \
     -Wl,-z,stack-size=268435456 main.cpp -o main
 ```
 
 ### Fast I/O Template (C++)
+
 ```cpp
 #include <iostream>
 
@@ -170,13 +167,14 @@ int main() {
     std::ios_base::sync_with_stdio(false);
     std::cin.tie(nullptr);
     std::cout.tie(nullptr);
-    
+
     // Seu código aqui
     return 0;
 }
 ```
 
 ### Atalhos no VS Code
+
 - **`Ctrl + Shift + B`**: Compila o arquivo C++ ativo com `-std=c++23` e sanitizers.
 - **Task `CP: Run Test with Input`**: Executa a solução contra o `input.txt` e mede o tempo em ms.
 
@@ -185,6 +183,7 @@ int main() {
 ## 📚 Handbook & Referências Rápidas
 
 Consulte o [**HANDBOOK.md**](HANDBOOK.md) para implementações canônicas, complexidades e notas de:
+
 - **Estruturas de Dados:** DSU, Fenwick Tree, Segment Tree, Sparse Table, Trie.
 - **Grafos:** Dijkstra, Tarjan SCC, LCA (Binary Lifting), Dinic Max Flow.
 - **Matemática:** Exponenciação Rápida, Crivo Linear, Combinatória Modular, Euclides Estendido.

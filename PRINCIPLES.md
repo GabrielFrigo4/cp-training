@@ -10,7 +10,7 @@ O **Competitive Computing Hub** é o laboratório de treinamento, biblioteca de 
 
 ---
 
-## 🏛️ Os 18 Princípios de Design (17 Princípios UNIX + Soberania do Usuário)
+## 🏛️ Os 22 Princípios de Design (17 Princípios UNIX + 5 Regras Soberanas)
 
 ### 1. Regra da Modularidade (_Rule of Modularity_)
 
@@ -120,6 +120,31 @@ O **Competitive Computing Hub** é o laboratório de treinamento, biblioteca de 
 > _Honre a escolha explícita e deliberada do usuário antes de impor padrões genéricos._
 
 - O estilo de raciocínio e templates favoritos do desenvolvedor são preservados nos templates personalizados.
+
+### 19. Regra da Autonomia Reentrante (_Rule of Reentrant Autonomy & Opportunistic Synergy_)
+
+> _Projete cada módulo para ser 100% autossuficiente e tolerante ao isolamento; conecte-o de forma silenciosa e oportuna quando seus pares estiverem presentes._
+
+- O repositório e suas soluções compilam e executam de forma totalmente autônoma sem requerer outros repositórios do ecossistema. Ferramentas locais (`cpt`, scripts de build) detectam ferramentas do ambiente (como `wl-copy`, `xclip`, `gdb`, `valgrind`, `lldb`) de forma silenciosa e oportuna.
+
+### 20. Regra do Hermetismo de Produção & Autonomia Soberana (_Rule of Production Hermeticity_)
+
+> _O software é construído para humanos e juízes online; a inteligência artificial é exclusivamente uma copiloto sob demanda. Nenhum código de produção deve depender de ferramentas de IA._
+
+- **A Invariante do Teste de Fogo (`rm -rf .agents`):** Se a pasta `.agents/` for deletada, 100% das soluções, algoritmos, headers e testes continuam compilando e executando com perfeição absoluta.
+- **Zero Acoplamento de IA em Produção:** Nenhum código C++, Makefile, script de teste ou submissão depende ou faz referência a arquivos em `.agents/` ou skills.
+
+### 21. Regra do Desacoplamento Dev-Hub vs. Runtime de Produção (_Rule of Production Sovereign Isolation_)
+
+> _A bancada de ferramentas do artesão não deve ser soldada ao produto final; desenvolva no repositório, execute nos caminhos canônicos do sistema._
+
+- O repositório opera como bancada independente. Binários de teste e builds intermediários ficam restritos a diretórios locais sem poluir o sistema operacional ou caminhos globais.
+
+### 22. Regra da Antifragilidade & Resiliência Ativa (_Rule of Antifragility & Active Self-Healing_)
+
+> _O que é frágil quebra sob estresse de casos de teste extremos; o que é antifrágil auto-cura, adapta-se e resiste a limites de memória e tempo._
+
+- Soluções implementam Fast I/O, previnem overflow de tipos via inteiros de 64/128 bits e tratam casos limítrofes com robustez estrutural; a CLI `cpt` possui tolerância adaptativa a variações de ambiente.
 
 ---
 

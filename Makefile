@@ -12,7 +12,7 @@ CXXFLAGS   ?= -std=c++23 -O2 -Wall -Wextra
 STACK_FLAG ?= -Wl,-z,stack-size=268435456
 PYTHON     ?= python3
 
-.PHONY: all help setup setup-hooks test test-tool test-algorithms lint stats clean check-binaries
+.PHONY: all help setup setup-hooks test test-tool test-algorithms format clang-format prettier lint stats clean check-binaries
 
 all: help
 
@@ -20,10 +20,11 @@ all: help
 ### HELP & DOCUMENTATION
 ### ================================
 help:
-	cmd() { printf "    \033[36mmake %-22s\033[0m %s\n" "$$1" "$$2"; }; \
-	sec() { printf "\n  \033[1;33m%s\033[0m\n" "$$1"; }; \
-	sub() { printf "  \033[1;34m  ── %s ──\033[0m\n" "$$1"; }; \
-	printf "\n  \033[1;37mCompetitive Computing — Maratona de Programação & Automação\033[0m\n"; \
+	_e=$$'\e'; \
+	cmd() { printf "    $${_e}[36mmake %-22s$${_e}[0m %s\n" "$$1" "$$2"; }; \
+	sec() { printf "\n  $${_e}[1;33m%s$${_e}[0m\n" "$$1"; }; \
+	sub() { printf "  $${_e}[1;34m  ── %s ──$${_e}[0m\n" "$$1"; }; \
+	printf "\n  $${_e}[1;37mCompetitive Computing — Maratona de Programação & Automação$${_e}[0m\n"; \
 	printf "  ============================================================\n"; \
 	sec "Ambiente & Toolchain:"; \
 	cmd "setup"          "Configura hooks do Git, permissões e valida compilador"; \
@@ -33,6 +34,9 @@ help:
 	cmd "test-tool"      "Executa testes unitários do CLI (tools/cp_tool.py)"; \
 	cmd "test-algorithms" "Compila e valida todos os componentes de algorithms/"; \
 	sec "Qualidade & Estatísticas:"; \
+	cmd "format"         "Formata códigos C++ (clang-format) e documentação (prettier)"; \
+	cmd "clang-format"   "Formata arquivos C/C++ com clang-format"; \
+	cmd "prettier"       "Formata documentações Markdown com Prettier"; \
 	cmd "lint"           "Verifica sintaxe Python e ausência de binários rastreados"; \
 	cmd "stats"          "Exibe estatísticas consolidadas de problemas e categorias"; \
 	sec "Limpeza:"; \
@@ -70,6 +74,21 @@ test-algorithms:
 	$(CXX) $(CXXFLAGS) tests/test_algorithms.cpp -o tests/test_algos_bin
 	./tests/test_algos_bin
 	rm -f tests/test_algos_bin
+
+format: clang-format prettier
+	echo "✅ Formatação concluída!"
+
+clang-format:
+	echo "🎨 Formatando códigos C/C++ com clang-format..."
+	find . -type f \( -name "*.cpp" -o -name "*.hpp" -o -name "*.c" -o -name "*.h" \) -not -path "*/.*" -exec clang-format -i {} + 2> "/dev/null" || true
+
+prettier:
+	echo "🎨 Formatando documentações Markdown com Prettier..."
+	if command -v prettier > "/dev/null" 2>&1; then \
+		prettier --write "**/*.md" 2> "/dev/null" || true; \
+	elif command -v npx > "/dev/null" 2>&1; then \
+		npx prettier --write "**/*.md" 2> "/dev/null" || true; \
+	fi
 
 lint: check-binaries
 	echo "Verificando sintaxe de scripts Python..."

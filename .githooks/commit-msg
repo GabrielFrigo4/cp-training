@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 # ----------------------------------------------------------------
-# Hook: Git Semantic Commit-Message Validator (Competitive Computing)
+# Hook: Git Semantic Commit-Message Validator
 # License: MIT (c) 2026 GabrielFrigo
 # ----------------------------------------------------------------
 
@@ -20,26 +20,24 @@ case "${_clean_msg}" in
 esac
 
 if [ -z "${_clean_msg}" ]; then
-	echo "❌ [commit-msg] A mensagem de commit não pode estar vazia!" >&2
+	echo "❌ [commit-msg] Commit message cannot be empty!" >&2
 	exit 1
 fi
 
 _char_count=$(printf "%s" "${_clean_msg}" | wc -m)
 if [ "${_char_count}" -lt 8 ]; then
-	echo "❌ [commit-msg] Mensagem muito curta (mínimo de 8 caracteres)." >&2
+	echo "❌ [commit-msg] Commit message too short (minimum 8 characters)." >&2
 	exit 1
 fi
 
-_pattern='^(feat|fix|refactor|docs|style|test|chore|perf|ci|solution|algo)(\([a-zA-Z0-9_.\/-]+\))?!?:[[:space:]]+.+'
+_pattern='^(add|update|fix|docs|feat|chore|refactor|style|ci|test)(\([a-zA-Z0-9_-]+\))?:[[:space:]]+.+'
 if ! echo "${_clean_msg}" | grep -E -q "${_pattern}"; then
-	echo "❌ [commit-msg] Convenção Conventional Commits violada!" >&2
-	echo "   Formato esperado:" >&2
-	echo "     <tipo>(<escopo opcional>): <descrição>" >&2
-	echo "   Exemplos válidos:" >&2
-	echo "     solution(codeforces): solve div2 1000 problem A" >&2
-	echo "     algo(graphs): add dinic max flow implementation" >&2
-	echo "     feat(tools): add multi-language support to cpt" >&2
-	echo "   Tipos permitidos: feat, fix, refactor, docs, style, test, chore, perf, ci, solution, algo" >&2
+	echo "❌ [commit-msg] Semantic prefix convention violated!" >&2
+	echo "   Allowed formats:" >&2
+	echo "     <type>: <description>" >&2
+	echo "     <type>(<scope>): <description>" >&2
+	echo "   Allowed types: add, update, fix, docs, feat, chore, refactor, style, ci, test" >&2
+	echo "   Example: 'chore(governance): standardize commit-msg hook'" >&2
 	exit 1
 fi
 

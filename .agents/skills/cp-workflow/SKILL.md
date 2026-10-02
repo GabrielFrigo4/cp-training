@@ -23,6 +23,7 @@ Sempre utilize a ferramenta CLI centralizada (`./tools/cpt`):
 ```
 
 Isso gera automaticamente para cada pasta:
+
 - `main.<ext>` com o template otimizado correspondente
 - `input.txt` e `expected.txt`
 - `Makefile` local configurado

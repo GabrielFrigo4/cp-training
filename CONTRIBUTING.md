@@ -18,6 +18,7 @@ make setup
 ```
 
 ### O que o `make setup` faz automaticamente?
+
 1. **Ativa os Git Hooks versionados:** executa `git config core.hooksPath .githooks` para que o Git local passe a utilizar os scripts do repositório em vez de `.git/hooks/` locais.
 2. **Concede permissões de execução:** aplica `chmod +x .githooks/*` e `chmod +x tools/cpt tools/cptool`.
 3. **Valida pré-requisitos:** verifica se o compilador `g++` (com suporte a C++23) e o `python3` estão instalados no seu sistema.
@@ -25,6 +26,7 @@ make setup
 ---
 
 ### 🔧 Configuração Manual (Caso não tenha o `make`)
+
 Se o comando `make` não estiver disponível no seu terminal, execute os comandos equivalentes manualmente:
 
 ```bash
@@ -37,6 +39,7 @@ git config core.hooksPath .githooks
 ```
 
 Para verificar se o Git Hook está ativo:
+
 ```bash
 git config --get core.hooksPath
 # Deve retornar: .githooks
@@ -46,12 +49,12 @@ git config --get core.hooksPath
 
 ## 📦 2. Pré-requisitos do Sistema
 
-| Ferramenta | Versão Recomendada | Finalidade |
-|---|---|---|
-| **GCC / G++** | 13+ (ou 14/15/16) | Compilação com suporte completo a **C++23** (`-std=c++23`) |
-| **Python** | 3.10 ou superior | Execução da CLI (`./tools/cpt`) e scripts de estatística (sem dependências externas) |
-| **Make** | GNU Make 4+ | Automação unificada de testes, lint e setup |
-| **Clipboard** *(opcional)* | `wl-clipboard` ou `xclip` | Cópia rápida de soluções para submissão via `./tools/cpt clip` |
+| Ferramenta                 | Versão Recomendada        | Finalidade                                                                           |
+| -------------------------- | ------------------------- | ------------------------------------------------------------------------------------ |
+| **GCC / G++**              | 13+ (ou 14/15/16)         | Compilação com suporte completo a **C++23** (`-std=c++23`)                           |
+| **Python**                 | 3.10 ou superior          | Execução da CLI (`./tools/cpt`) e scripts de estatística (sem dependências externas) |
+| **Make**                   | GNU Make 4+               | Automação unificada de testes, lint e setup                                          |
+| **Clipboard** _(opcional)_ | `wl-clipboard` ou `xclip` | Cópia rápida de soluções para submissão via `./tools/cpt clip`                       |
 
 ---
 
@@ -75,6 +78,7 @@ make clean            # Remove executáveis compilados, temporários e saídas d
 ## 💻 4. Fluxo de Desenvolvimento de Soluções
 
 ### 4.1 Criar Novo Contest ou Problema
+
 Sempre utilize a CLI `./tools/cpt` para manter a padronização das pastas:
 
 ```bash
@@ -89,17 +93,21 @@ Sempre utilize a CLI `./tools/cpt` para manter a padronização das pastas:
 ```
 
 ### 4.2 Testar Localmente contra Exemplos
+
 Abra a pasta do problema, cole os exemplos do enunciado em `input.txt` e a saída esperada em `expected.txt`:
 
 ```bash
 # Executa e compara automaticamente com diff visual:
 ./tools/cpt run practice/codeforces/normal/div-2/round-1000/A
 ```
+
 - Se a saída for idêntica: exibe `[ AC ]` com tempo de execução em milissegundos.
 - Se houver divergência: exibe `[ WA ]` com diff unificado linha a linha.
 
 ### 4.3 Copiar para Submissão
+
 Copie o código-fonte diretamente para a área de transferência do sistema operacional:
+
 ```bash
 ./tools/cpt clip practice/codeforces/normal/div-2/round-1000/A/main.cpp
 ```
@@ -109,6 +117,7 @@ Copie o código-fonte diretamente para a área de transferência do sistema oper
 ## 📚 5. Adicionando Novos Algoritmos (`algorithms/`)
 
 Ao implementar um novo algoritmo canônico ou estrutura de dados:
+
 1. Crie o arquivo de cabeçalho modular em `algorithms/<categoria>/<nome>.hpp`.
 2. Inclua `#pragma once` no início.
 3. Não use `using namespace std;` no arquivo `.hpp`.
@@ -127,6 +136,7 @@ O repositório utiliza um hook `commit-msg` que valida o padrão **Conventional 
 ```
 
 ### Tipos Permitidos:
+
 - **`solution`**: Adição ou ajuste de solução de maratona ou treino (ex: `solution(codeforces): solve div2 1000 A`).
 - **`algo`**: Nova estrutura ou algoritmo na biblioteca (ex: `algo(graphs): add dinic max flow`).
 - **`feat`**: Nova funcionalidade na CLI ou automações (ex: `feat(cpt): add rust template support`).
@@ -141,11 +151,11 @@ O repositório utiliza um hook `commit-msg` que valida o padrão **Conventional 
 ## 🛡️ 7. O que os Git Hooks Protegem?
 
 - **`pre-commit`**:
-  - Impede o commit acidental de arquivos executáveis compilados (`main`, `main_bin`, `*.exe`, `*.out`, `*.o`).
-  - Impede commits com conflitos de merge não resolvidos (`<<<<<<<`, `=======`).
-  - Bloqueia arquivos gigantes (> 5MB).
-  - Valida a sintaxe de arquivos Python e C++ alterados.
+    - Impede o commit acidental de arquivos executáveis compilados (`main`, `main_bin`, `*.exe`, `*.out`, `*.o`).
+    - Impede commits com conflitos de merge não resolvidos (`<<<<<<<`, `=======`).
+    - Bloqueia arquivos gigantes (> 5MB).
+    - Valida a sintaxe de arquivos Python e C++ alterados.
 - **`commit-msg`**:
-  - Garante que todas as mensagens sigam o padrão Conventional Commits.
+    - Garante que todas as mensagens sigam o padrão Conventional Commits.
 - **`pre-push`**:
-  - Executa `make lint` antes de permitir o envio para o repositório remoto.
+    - Executa `make lint` antes de permitir o envio para o repositório remoto.

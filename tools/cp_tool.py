@@ -14,14 +14,14 @@ from pathlib import Path
 import difflib
 
 # ANSI Colors
-RESET = "\033[0m"
-BOLD = "\033[1m"
-GREEN = "\033[92m"
-RED = "\033[91m"
-YELLOW = "\033[93m"
-CYAN = "\033[96m"
-MAGENTA = "\033[95m"
-GRAY = "\033[90m"
+RESET = "\x1b[0m"
+BOLD = "\x1b[1m"
+GREEN = "\x1b[92m"
+RED = "\x1b[91m"
+YELLOW = "\x1b[93m"
+CYAN = "\x1b[96m"
+MAGENTA = "\x1b[95m"
+GRAY = "\x1b[90m"
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 

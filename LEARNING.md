@@ -6,9 +6,9 @@ Curated list of competitive programming books, learning platforms, advanced theo
 
 ## 📚 Essential Books & Handbooks
 
-- **[Competitive Programmer’s Handbook](https://cses.fi/book/book.pdf)** *(Antti Laaksonen)* — O melhor guia direto ao ponto para algoritmos modernos.
-- **[Guide to Competitive Programming](https://link.springer.com/book/10.1007/978-3-319-72547-5)** *(Antti Laaksonen)* — Abordagem prática com foco em problemas do CSES e Codeforces.
-- **[Computational Geometry: Algorithms and Applications](https://www.springer.com/gp/book/9783540779735)** *(de Berg et al.)* — Referência definitiva para geometria computacional.
+- **[Competitive Programmer’s Handbook](https://cses.fi/book/book.pdf)** _(Antti Laaksonen)_ — O melhor guia direto ao ponto para algoritmos modernos.
+- **[Guide to Competitive Programming](https://link.springer.com/book/10.1007/978-3-319-72547-5)** _(Antti Laaksonen)_ — Abordagem prática com foco em problemas do CSES e Codeforces.
+- **[Computational Geometry: Algorithms and Applications](https://www.springer.com/gp/book/9783540779735)** _(de Berg et al.)_ — Referência definitiva para geometria computacional.
 - **[Introduction to Algorithms (CLRS)](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/)** — Provas formais e fundamentos teóricos.
 
 ---
@@ -26,19 +26,22 @@ Curated list of competitive programming books, learning platforms, advanced theo
 ## 🔬 Advanced Topics & Mathematics in CP
 
 ### 1. Álgebra Linear e Sistemas Dinâmicos
+
 - **Sistemas Dinâmicos Lineares Invariantes no Tempo (LTI)**:
-  - Modelagem de sequências recorrentes com exponenciação de matrizes $\mathcal{O}(K^3 \log N)$.
-  - Algoritmo de Berlekamp-Massey para encontrar a menor recorrência linear a partir dos primeiros termos em $\mathcal{O}(N^2)$.
-  - Algoritmo de Kitamasa / Fast Linear Recurrence em $\mathcal{O}(K \log K \log N)$.
+    - Modelagem de sequências recorrentes com exponenciação de matrizes $\mathcal{O}(K^3 \log N)$.
+    - Algoritmo de Berlekamp-Massey para encontrar a menor recorrência linear a partir dos primeiros termos em $\mathcal{O}(N^2)$.
+    - Algoritmo de Kitamasa / Fast Linear Recurrence em $\mathcal{O}(K \log K \log N)$.
 
 ### 2. Teoria dos Corpos Finitos (Galois Fields)
+
 - **Corpos de Galois ($\mathbb{F}_{p^k}$ ou $GF(2^k)$)**:
-  - Aplicação em criptografia, hashing perfeito e convolução rápida.
-  - Nim-multiplication e Teoria dos Jogos Combinatórios em corpos finitos.
+    - Aplicação em criptografia, hashing perfeito e convolução rápida.
+    - Nim-multiplication e Teoria dos Jogos Combinatórios em corpos finitos.
 
 ### 3. Reduções Algorítmicas Clássicas
+
 - **Floyd-Warshall $\iff$ Eliminação Gaussiana (Álgebra de Semianel)**:
-  - O algoritmo de Floyd-Warshall para caminhos mínimos pode ser visto como uma eliminação de Gauss-Jordan sobre o semianel $(\min, +)$.
+    - O algoritmo de Floyd-Warshall para caminhos mínimos pode ser visto como uma eliminação de Gauss-Jordan sobre o semianel $(\min, +)$.
 - **Fecho Transitivo $\iff$ Multiplicação Booleana de Matrizes**.
 - **Emparelhamento Máximo Bipartido $\iff$ Fluxo Máximo (Max Flow - Dinic / Hopcroft-Karp)**.
 - **Min-Cut $\iff$ Conjunto Independente Máximo em Grafos Bipartidos**.

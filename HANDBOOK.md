@@ -19,6 +19,7 @@ Um guia abrangente e moderno de algoritmos, estruturas de dados, técnicas de ot
 ## 1. ⚡ Setup & Otimizações
 
 ### 1.1 Fast I/O em C++
+
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,19 +29,21 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
-    
+
     // Use '\n' em vez de endl para evitar flush desnecessário
     return 0;
 }
 ```
 
 ### 1.2 Pragmas de Otimização GCC
+
 ```cpp
 #pragma GCC optimize("O3,unroll-loops")
 #pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
 ```
 
 ### 1.3 Flags de Compilação Recomendadas
+
 ```bash
 g++ -std=c++23 -O2 -Wall -Wextra -Wconversion -Wshadow -fsanitize=undefined -Wl,-z,stack-size=268435456 main.cpp -o main
 ```
@@ -50,7 +53,9 @@ g++ -std=c++23 -O2 -Wall -Wextra -Wconversion -Wshadow -fsanitize=undefined -Wl,
 ## 2. 🏗️ Estruturas de Dados
 
 ### 2.1 Disjoint Set Union (DSU / Union-Find)
+
 Estrutura para gerenciar conjuntos disjuntos com **Path Compression** e **Union by Size/Rank**.
+
 - **Complexidade:** $\mathcal{O}(\alpha(N))$ por operação quase linear ($\alpha(N) \le 4$).
 
 ```cpp
@@ -81,6 +86,7 @@ struct DSU {
 ```
 
 ### 2.2 Fenwick Tree (Binary Indexed Tree - BIT)
+
 Atualização pontual e consulta de soma de prefixos em $\mathcal{O}(\log N)$.
 
 ```cpp
@@ -109,6 +115,7 @@ struct FenwickTree {
 ```
 
 ### 2.3 Sparse Table (Range Minimum Query em $\mathcal{O}(1)$)
+
 Pré-processamento em $\mathcal{O}(N \log N)$ e consulta em $\mathcal{O}(1)$ para funções idempotentes ($\min, \max, \gcd$).
 
 ```cpp
@@ -139,6 +146,7 @@ struct SparseTable {
 ## 3. 🌐 Teoria dos Grafos
 
 ### 3.1 Dijkstra (Caminho Mínimo em Grafos com Pesos Não-Negativos)
+
 - **Complexidade:** $\mathcal{O}((V + E) \log V)$
 
 ```cpp
@@ -168,6 +176,7 @@ vector<T> dijkstra(int source, int n, const vector<vector<pair<int, T>>>& adj, T
 ```
 
 ### 3.2 Lowest Common Ancestor (LCA) via Binary Lifting
+
 - **Pré-cálculo:** $\mathcal{O}(N \log N)$
 - **Consulta:** $\mathcal{O}(\log N)$
 
@@ -210,6 +219,7 @@ struct LCA {
 ## 4. 🔢 Matemática & Teoria dos Números
 
 ### 4.1 Exponenciação Rápida e Inverso Modular
+
 $$a^b \pmod m, \quad a^{-1} \equiv a^{m-2} \pmod m \quad (\text{para } m \text{ primo})$$
 
 ```cpp
@@ -230,6 +240,7 @@ int64_t mod_inv(int64_t n, int64_t mod = 1000000007) {
 ```
 
 ### 4.2 Crivo Linear de Eratóstenes $\mathcal{O}(N)$
+
 Gera todos os primos até $N$ e permite fatoração prima em tempo $\mathcal{O}(\log X)$.
 
 ```cpp
@@ -259,6 +270,7 @@ struct LinearSieve {
 ## 5. 🧩 Programação Dinâmica
 
 ### 5.1 Longest Increasing Subsequence (LIS em $\mathcal{O}(N \log N)$)
+
 ```cpp
 template <typename T>
 int longest_increasing_subsequence(const vector<T>& a) {
@@ -273,6 +285,7 @@ int longest_increasing_subsequence(const vector<T>& a) {
 ```
 
 ### 5.2 0/1 Knapsack
+
 $$\text{dp}[w] = \max(\text{dp}[w], \text{dp}[w - \text{weight}_i] + \text{value}_i)$$
 
 ```cpp
@@ -292,6 +305,7 @@ int64_t knapsack(int W, const vector<int>& weights, const vector<int64_t>& value
 ## 6. 🔤 Algoritmos em Strings
 
 ### 6.1 KMP (Knuth-Morris-Pratt Matching em $\mathcal{O}(N + M)$)
+
 ```cpp
 vector<int> prefix_function(const string& s) {
     int n = (int)s.length();
@@ -311,7 +325,9 @@ vector<int> prefix_function(const string& s) {
 ## 7. 📐 Geometria Computacional
 
 ### 7.1 Ponto 2D & Produto Vetorial (Cross Product)
+
 O produto vetorial determina a orientação:
+
 - $> 0$: Curva à esquerda (anti-horário)
 - $< 0$: Curva à direita (horário)
 - $= 0$: Colinear

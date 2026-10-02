@@ -1,4 +1,5 @@
 # Enunciado
+
 A CIA interceptou um vídeo suspeito que circulava pela dark web, contendo 1000 números aparentemente aleatórios: ()[https://we.tl/t-2m5q9S3WGd]
 
 Após uma análise, seus analistas descobriram que esses números escondiam o código para desarmar uma bomba plantada por um grupo terrorista. A bomba, prestes a ser detonada, exibe dois números em seu display – os índices que apontam a localização exata dos números no vídeo.
@@ -14,26 +15,33 @@ Sua missão é criar um código que mostre a soma dos números entre um índice 
 Contamos com você!
 
 ## Input Format
+
 A entrada possui apenas uma linha contendo 2 números inteiros A e B separados por espaço.
 
 ## Constraints
+
 0 <= A <= B < 1000
 
 ## Output Format
+
 A saída deve ser apenas a soma de todos os números entre os dois índices
 
 ## Sample 0
+
 Input
+
 ```
 134 154
 ```
 
 Output
+
 ```
 96941
 ```
 
 ## Dica
+
 ```
 Soma entre os indices 0 e 100: 541181
 Soma entre os indices 100 e 200: 545856
@@ -48,5 +56,6 @@ Soma entre os indices 900 e 999: 526748
 ```
 
 # Softwares
- - `FFMPEG` => Get PNG frames in MP4 file
- - `OCRAD` or `GOCR` => Get Text in PNG frames
+
+- `FFMPEG` => Get PNG frames in MP4 file
+- `OCRAD` or `GOCR` => Get Text in PNG frames

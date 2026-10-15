@@ -34,7 +34,7 @@ Curated list of competitive programming books, learning platforms, advanced theo
 
 ### 2. Teoria dos Corpos Finitos (Galois Fields)
 
-- **Corpos de Galois ($\mathbb{F}_{p^k}$ ou $GF(2^k)$)**:
+- **Corpos de Galois ($\mathbb{F}\_{p^k}$ ou $GF(2^k)$)**:
     - Aplicação em criptografia, hashing perfeito e convolução rápida.
     - Nim-multiplication e Teoria dos Jogos Combinatórios em corpos finitos.
 

@@ -83,11 +83,11 @@ clang-format:
 	find . -type f \( -name "*.cpp" -o -name "*.hpp" -o -name "*.c" -o -name "*.h" \) -not -path "*/.*" -exec clang-format -i {} + 2> "/dev/null" || true
 
 prettier:
-	echo "🎨 Formatando documentações Markdown com Prettier..."
+	echo "🎨 Formatando documentações e configurações com Prettier..."
 	if command -v prettier > "/dev/null" 2>&1; then \
-		prettier --write "**/*.md" 2> "/dev/null" || true; \
+		prettier --write "**/*.{md,json,yml,yaml}" 2> "/dev/null" || true; \
 	elif command -v npx > "/dev/null" 2>&1; then \
-		npx prettier --write "**/*.md" 2> "/dev/null" || true; \
+		npx --yes prettier --write "**/*.{md,json,yml,yaml}" 2> "/dev/null" || true; \
 	fi
 
 lint: check-binaries

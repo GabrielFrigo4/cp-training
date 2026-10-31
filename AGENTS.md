@@ -1,12 +1,12 @@
-# 🤖 AGENTS.md — Guia de Instruções para Agentes de IA
+# 🤖 Competitive Computing Hub — AI Agent Briefing
 
-Bem-vindo ao repositório **Competitive Programming Hub** (`cp-training`). Este documento serve como diretriz canônica e instrução primária para agentes de Inteligência Artificial (Antigravity, Claude, Copilot, Cursor, etc.) operando nesta base de código.
+> Centro de treinamento, biblioteca de algoritmos e registro de soluções para competições de programação competitiva (ICPC, OBI, Codeforces, AtCoder).
 
 ---
 
-## 🎯 Missão e Escopo do Repositório
+## 🧭 Identidade e Papel
 
-O objetivo deste projeto é ser um centro de treinamento, biblioteca de algoritmos e registro de soluções para competições de programação competitiva (ICPC, OBI, Codeforces, AtCoder, Seletiva USP, LeetCode, CSES e Advent of Code).
+O repositório **Competitive Programming Hub** (`cp-training`) serve como centro de treinamento e biblioteca canônica de algoritmos:
 
 - **Foco:** Performance extrema, rigor algorítmico, modularidade e automação via terminal Linux.
 - **Linguagens principais:**
@@ -17,7 +17,7 @@ O objetivo deste projeto é ser um centro de treinamento, biblioteca de algoritm
 
 ---
 
-## 🏗️ Arquitetura de Diretórios
+## 📁 Estrutura do Repositório
 
 ```text
 cp-training/
@@ -34,12 +34,18 @@ cp-training/
 ├── Makefile                  # Makefile centralizado com automações de build, test e lint
 ├── HANDBOOK.md               # Caderno consolidado de algoritmos e fórmulas com LaTeX
 ├── CONTRIBUTING.md           # Guia de setup e contribuição para novos clones
-└── README.md                 # Visão geral do repositório
+├── LEARNING.md               # Roteiro de aprendizagem e tópicos
+├── LICENSE                   # Licença MIT
+├── PRINCIPLES.md             # 22 Princípios de Engenharia adaptados
+├── README.md                 # Visão geral do repositório
+└── TODO.md                   # Backlog de treinamento e matriz de cobertura
 ```
 
 ---
 
-## ⚙️ Convenções Técnicas e Flags Canônicas
+## ⚠️ Regras Críticas para Agentes de IA
+
+### Convenções Técnicas e Flags Canônicas
 
 ### 1. C++23 (GCC)
 
@@ -65,7 +71,7 @@ cp-training/
 
 ---
 
-## 🛠️ Automação e Ferramentas Disponíveis para o Agente
+### Automação e Ferramentas Disponíveis para o Agente
 
 ### 1. Makefile Centralizado
 
@@ -99,7 +105,7 @@ Para criar novos problemas ou contests:
 
 ---
 
-## 🛡️ Regras de Segurança e Higiene (Guardrails)
+### Regras de Segurança e Higiene (Guardrails)
 
 1. **NUNCA faça commit de binários compilados:**
     - O hook `pre-commit` bloqueia extensões como `.exe`, `.out`, `main`, `main_bin`, `.o`, `.a`.
@@ -120,19 +126,62 @@ Para criar novos problemas ou contests:
 
 ---
 
+---
+
 ## 🛡️ Regra da Proatividade e Correção Contínua (Boy Scout Rule)
 
-O agente de IA **DEVE SER ATIVAMENTE PROATIVO** na manutenção e aplicação dos padrões canônicos deste repositório.
+O agente de IA atua de forma proativa na manutenção e aplicação dos padrões canônicos deste repositório.
 
-Se durante a execução de qualquer tarefa (seja criação de novas features, correções pontuais, refatorações ou investigação) o agente identificar qualquer linha de código, script, Makefile ou documentação fora dos padrões estabelecidos, **NÃO DEVE HESITAR NEM IGNORAR**:
+Ao identificar linhas ou artefatos fora dos padrões estabelecidos:
 
-1. **Notificar concisamente** o usuário sobre a divergência encontrada.
-2. **Corrigir imediatamente a inconformidade**, aplicando o padrão canônico correspondente:
-    - **Comentários Narrativos:** Eliminar imediatamente comentários óbvios que apenas narram código executável.
+1. **Notificar concisamente** o usuário sobre o ajuste realizado.
+2. **Corrigir a inconformidade**, aplicando o padrão correspondente:
+    - **Comentários Narrativos:** Eliminar comentários óbvios que apenas narram código executável.
     - **Banners Estruturais:** Ajustar réguas para exatamente 64 hífens no topo ou 32 caracteres com `### ` no corpo.
     - **Portabilidade POSIX:** Substituir bashismos (`[[ ]]`, `&>`, arrays, `source`) por sintaxe estrita POSIX `/bin/sh`.
     - **Shebang Universal:** Garantir sempre `#!/usr/bin/env sh` ou `#!/usr/bin/env python3`.
-    - **Sequências ANSI:** Substituir octais crípticos (``) e `printf` desnecessário por `[ -t 1 ] && echo -n $'\e...'`.
+    - **Sequências ANSI & Escapes:** Não use octais (`\033`, `\001`) para caracteres ou escapes. Use `[ -t 1 ] && echo -n $\x27\e...\x27` ou notação hexadecimal (`\x01`, `\x1b`). Octal é exclusivo para permissões POSIX (`chmod 0755`, `chmod 0644`, `umask`).
     - **Redirecionamento Seguro:** Envolver destinos em aspas duplas (ex: `> "/dev/null" 2>&1`).
     - **Makefiles:** Assegurar cabeçalho `.POSIX: .SILENT:`, `MAKEFLAGS += --no-print-directory -s`, alinhamento estético de variáveis e zero `@` redundante.
     - **Permissões Canônicas:** Aplicar 4 dígitos octais (`chmod 0755`, `chmod 0644`, `chmod 0700`, `chmod 0600`).
+    - **Invariante Out-of-the-Box:** Garantir modos octais corretos no Git Index e auto-cura em tempo de execução sem requerer intervenção manual pós-clone.
+    - **Emissão Semântica de UI:** Substituir `echo` avulsos com emojis pelas rotinas canônicas `_ui_*`.
+    - **Antifragilidade & Resiliência:** Resolução ativa de caminhos em cascata, auto-cura de permissões (0600 em chaves/segredos) e validação defensiva de pré-requisitos.
+    - **Curadoria Cognitiva:** Capturar decisões estruturais e regras tácitas em skills locais compactas (`.agents/skills/`), mantendo-as atualizadas e expurgando ruído obsoleto.
+    - **Refatoração Sem Legado:** Expurgar aliases obsoletos, variáveis mortas e shims de compatibilidade em renomeações.
+    - **Elevação Antifrágil & Shift Seguro:** Usar o bloco explícito `if [ "$(id -u)" -ne 0 ]` para resolução de `ELEVATE` (evitando término fatal sob `set -e` como root) e proteger todo comando `shift` com validação prévia de parâmetros (`[ "$#" -ge N ] && shift N`).
+    - **Simetria de Documentação:** Mover regras ou invariantes universais documentadas erroneamente em sub-membros específicos para o documento de arquitetura do grupo correspondente, eliminando falsas assimetrias.
+
+---
+
+## 🚀 Comandos de Verificação Rápida (Quality Gates)
+
+| Comando               | Finalidade Operacional                                               |
+| :-------------------- | :------------------------------------------------------------------- |
+| `make help`           | Exibe o catálogo completo de tarefas operacionais                    |
+| `make setup`          | Configura permissões e ganchos em `.githooks/`                       |
+| `make test`           | Executa a suíte completa de testes automatizados                     |
+| `make lint`           | Valida linters e integridade estática do repositório                 |
+| `make check-binaries` | Verifica se existem binários compilados indevidamente no repositório |
+| `make format`         | Aplica formatação automática em arquivos de código                   |
+| `make prettier`       | Formata arquivos Markdown e JSON com Prettier                        |
+| `make clean`          | Remove binários compilados, saídas de teste e temporários            |
+| `make ci`             | Executa a pipeline local completa de validação integrada             |
+
+---
+
+## 📖 Referências Obrigatórias
+
+Antes de qualquer modificação neste ecossistema, consulte:
+
+- [README.md](README.md) — Visão geral e catálogo do treinamento
+- [PRINCIPLES.md](PRINCIPLES.md) — 22 Princípios de Engenharia adaptados
+- [HANDBOOK.md](HANDBOOK.md) — Caderno consolidado de algoritmos e fórmulas
+- [CONTRIBUTING.md](CONTRIBUTING.md) — Guia de contribuição e convenções locais
+- [LEARNING.md](LEARNING.md) — Roteiro de aprendizagem e tópicos competitivos
+- [TODO.md](TODO.md) — Backlog de treino e matriz de cobertura
+- [LICENSE](LICENSE) — Licença MIT do projeto
+- [Makefile](Makefile) — Catálogo de automação e scripts de build
+- [.agents/rules/code-hygiene.md](.agents/rules/code-hygiene.md) — Diretrizes de higiene de código
+- [.agents/rules/competitive-programming.md](.agents/rules/competitive-programming.md) — Convenções de CP
+- [.agents/skills/icpc-competitive-engineering/SKILL.md](.agents/skills/icpc-competitive-engineering/SKILL.md) — Runbook de engenharia competitiva

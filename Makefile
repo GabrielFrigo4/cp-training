@@ -111,8 +111,12 @@ stats:
 ### CLEANUP
 ### ================================
 clean:
-	echo "Removendo arquivos temporários e binários compilados..."
+	echo "🧹 Removendo arquivos temporários, caches, .venv e binários compilados..."
+	rm -rf .venv
 	rm -f tests/test_algos_bin
 	find . -type f \( -name "main_bin" -o -name "*.exe" -o -name "*.out" -o -name "a.out" -o -name "output.txt" -o -name "actual.txt" -o -name "diff.txt" \) -exec rm -f {} +
 	find . -type d -name "__pycache__" -exec rm -rf {} + 2> "/dev/null" || true
-	echo "Limpeza concluída."
+	find . -type d -name ".pytest_cache" -exec rm -rf {} + 2> "/dev/null" || true
+	find . -type d -name ".ruff_cache" -exec rm -rf {} + 2> "/dev/null" || true
+	find . -type d -name ".mypy_cache" -exec rm -rf {} + 2> "/dev/null" || true
+	echo "✅ Limpeza concluída."

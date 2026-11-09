@@ -1,1 +1,5 @@
-cp_tool.py
+#!/usr/bin/env sh
+set -eu
+
+DIR="$(cd "$(dirname "$0")" && pwd -P)"
+exec python3 "${DIR}/cp_tool.py" "$@"

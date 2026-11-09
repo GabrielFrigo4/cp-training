@@ -13,12 +13,13 @@ jobs:
     lint-and-hygiene:
         name: Lint & Repository Hygiene
         runs-on: ubuntu-latest
+        timeout-minutes: 10
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v7
+              uses: actions/checkout@v4
 
             - name: Set up Python
-              uses: actions/setup-python@v7
+              uses: actions/setup-python@v5
               with:
                   python-version: "3.12"
 
@@ -36,20 +37,28 @@ jobs:
     build-and-test:
         name: Build & Algorithm Tests (C++23 & CLI)
         runs-on: ubuntu-latest
+        timeout-minutes: 10
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v7
+              uses: actions/checkout@v4
 
             - name: Set up Python
-              uses: actions/setup-python@v7
+              uses: actions/setup-python@v5
               with:
                   python-version: "3.12"
 
             - name: Install Modern GCC (C++23)
               run: |
-                  sudo apt-get update -qq
-                  sudo apt-get install -y g++-13
-                  sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
+                  export DEBIAN_FRONTEND=noninteractive
+                  if ! command -v g++-13 >/dev/null 2>&1 && ! command -v g++-14 >/dev/null 2>&1; then
+                    sudo apt-get update -qq
+                    sudo apt-get install -y -qq g++-13
+                  fi
+                  if command -v g++-14 >/dev/null 2>&1; then
+                    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
+                  elif command -v g++-13 >/dev/null 2>&1; then
+                    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
+                  fi
                   g++ --version
 
             - name: Run Test Suite
@@ -58,12 +67,13 @@ jobs:
     stats-verification:
         name: Verify Repository Statistics
         runs-on: ubuntu-latest
+        timeout-minutes: 10
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v7
+              uses: actions/checkout@v4
 
             - name: Set up Python
-              uses: actions/setup-python@v7
+              uses: actions/setup-python@v5
               with:
                   python-version: "3.12"
 

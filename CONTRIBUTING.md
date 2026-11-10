@@ -1,161 +1,127 @@
-# 🤝 Guia de Contribuição & Setup de Ambiente
+# 🤝 Guia de Contribuição
 
-Obrigado pelo interesse em contribuir com o **Competitive Programming Hub** (`cp-training`)! Este guia contém as instruções passo a passo para configurar seu ambiente local após clonar o repositório, garantindo que os hooks do Git, ferramentas CLI e automações funcionem perfeitamente.
-
----
-
-## 🚀 1. Configuração Rápida (Clone & Setup)
-
-Ao clonar o repositório em uma nova máquina ou ambiente:
-
-```bash
-# 1. Clone o repositório
-git clone https://github.com/GabrielFrigo4/cp-training.git
-cd cp-training
-
-# 2. Execute o setup automático (1 único comando)
-make setup
-```
-
-### O que o `make setup` faz automaticamente?
-
-1. **Ativa os Git Hooks versionados:** executa `git config core.hooksPath .githooks` para que o Git local passe a utilizar os scripts do repositório em vez de `.git/hooks/` locais.
-2. **Concede permissões de execução:** aplica `chmod +x .githooks/*` e `chmod +x tools/cpt tools/cptool`.
-3. **Valida pré-requisitos:** verifica se o compilador `g++` (com suporte a C++23) e o `python3` estão instalados no seu sistema.
+> Diretrizes de desenvolvimento, ciclo de contribuição, quality gates defensivos e convenções de engenharia para repositórios do ecossistema.
 
 ---
 
-### 🔧 Configuração Manual (Caso não tenha o `make`)
+## 🚀 Setup Inicial
 
-Se o comando `make` não estiver disponível no seu terminal, execute os comandos equivalentes manualmente:
+Para configurar o repositório local e ativar as barreiras de qualidade com auto-cura:
 
-```bash
-# Concede permissão de execução aos hooks e ferramentas
-chmod +x .githooks/*
-chmod +x tools/cpt tools/cptool
+1. Ativar os ganchos Git defensivos com permissões canônicas:
 
-# Configura o Git para usar a pasta .githooks
-git config core.hooksPath .githooks
+```sh
+make hooks
 ```
 
-Para verificar se o Git Hook está ativo:
+2. Validar a integridade local e os quality gates integrados:
 
-```bash
-git config --get core.hooksPath
-# Deve retornar: .githooks
+```sh
+make ci
 ```
 
 ---
 
-## 📦 2. Pré-requisitos do Sistema
+## 🔄 Ciclo Canônico de Contribuição
 
-| Ferramenta                 | Versão Recomendada        | Finalidade                                                                           |
-| -------------------------- | ------------------------- | ------------------------------------------------------------------------------------ |
-| **GCC / G++**              | 13+ (ou 14/15/16)         | Compilação com suporte completo a **C++23** (`-std=c++23`)                           |
-| **Python**                 | 3.10 ou superior          | Execução da CLI (`./tools/cpt`) e scripts de estatística (sem dependências externas) |
-| **Make**                   | GNU Make 4+               | Automação unificada de testes, lint e setup                                          |
-| **Clipboard** _(opcional)_ | `wl-clipboard` ou `xclip` | Cópia rápida de soluções para submissão via `./tools/cpt clip`                       |
+Todo o fluxo de desenvolvimento segue o desacoplamento estrito entre a bancada de trabalho e os runtimes de produção:
 
----
-
-## 🛠️ 3. Comandos Úteis do Makefile
-
-O repositório possui um `Makefile` centralizado na raiz:
-
-```bash
-make help             # Exibe todos os comandos disponíveis com descrições
-make setup            # Configura hooks, permissões e valida ferramentas
-make test             # Executa a suíte de testes (CLI + compilação de algoritmos)
-make test-algorithms  # Valida compilação de todos os headers de algorithms/ em C++23
-make test-tool        # Executa testes unitários da ferramenta CLI
-make lint             # Verifica sintaxe e assegura que não há binários no stage
-make stats            # Exibe estatísticas consolidadas do repositório
-make clean            # Remove executáveis compilados, temporários e saídas de teste
-```
+1. **Bancada de Edição:** Alterações devem ocorrer exclusivamente na bancada em `~/Documents/`. Nunca altere clones ou diretórios de produção diretamente.
+2. **Implementação Limpa:** Desenvolva mantendo o código autoexplicativo, respeitando a Taxonomia Tripartite de Comentários e a portabilidade POSIX.
+3. **Quality Gates Locais:** Valide seu trabalho localmente executando `make format`, `make audit`, `make test` e `make ci`.
+4. **Commit Semântico:** Registre alterações atômicas seguindo a convenção de commits semânticos, protegida pelos ganchos Git com auto-cura.
+5. **Deploy Canônico:** Envie as alterações via `git push`. Ambientes de produção recebem atualizações unicamente via `git pull`.
 
 ---
 
-## 💻 4. Fluxo de Desenvolvimento de Soluções
+## 🛡️ Invariantes de Engenharia
 
-### 4.1 Criar Novo Contest ou Problema
+Toda contribuição deve respeitar rigorosamente as diretrizes em [PRINCIPLES.md](PRINCIPLES.md) e [AGENTS.md](AGENTS.md):
 
-Sempre utilize a CLI `./tools/cpt` para manter a padronização das pastas:
+1. **Taxonomia Tripartite de Comentários:**
+    - _Comentários de Sistema:_ PERMITIDOS (shebangs, pragmas, diretivas de linters).
+    - _Comentários Estruturais de 64/32 colunas:_ PERMITIDOS (cabeçalhos de 64 `-` `# ----------------------------------------------------------------`, réguas de 32 caracteres `### ================================` e `### --------------------------------` com títulos em MAIÚSCULO, réguas de 64 `=` em `.gitignore` com títulos em MAIÚSCULO).
+    - _Comentários Explicativos/Narrativos:_ PROIBIDOS em código-fonte, configurações e blocos de código dentro de arquivos Markdown.
 
-```bash
-# Exemplo 1: Criar contest do Codeforces com problemas A, B, C, D, E (C++23)
-./tools/cpt new practice/codeforces/normal/div-2/round-1000 A B C D E
+2. **Invariante de Modos no Git Index (`0755` vs `0644`):**
+    - Scripts executáveis e ganchos Git devem manter permissão `0755` (`100755` no Git Index).
+    - Arquivos de configuração, documentações, manifestos e fontes devem manter `0644` (`100644` no Git Index).
+    - Permissões no índice podem ser ajustadas manualmente quando necessário:
+        ```sh
+        git update-index --chmod=+x scripts/util.sh
+        git update-index --chmod=-x README.md
+        ```
 
-# Exemplo 2: Criar problema com template Python
-./tools/cpt new practice/leetcode/dynamic-programming/coin-change --lang py
+3. **Hermetismo de Produção (`rm -rf .agents`):**
+    - Nenhum build, script de produção ou execução de aplicação pode depender de arquivos em `.agents/` ou `skills/`.
 
-# Exemplo 3: Criar contest em Rust
-./tools/cpt new practice/atcoder/beginner/abc-350 A B C --lang rs
-```
-
-### 4.2 Testar Localmente contra Exemplos
-
-Abra a pasta do problema, cole os exemplos do enunciado em `input.txt` e a saída esperada em `expected.txt`:
-
-```bash
-# Executa e compara automaticamente com diff visual:
-./tools/cpt run practice/codeforces/normal/div-2/round-1000/A
-```
-
-- Se a saída for idêntica: exibe `[ AC ]` com tempo de execução em milissegundos.
-- Se houver divergência: exibe `[ WA ]` com diff unificado linha a linha.
-
-### 4.3 Copiar para Submissão
-
-Copie o código-fonte diretamente para a área de transferência do sistema operacional:
-
-```bash
-./tools/cpt clip practice/codeforces/normal/div-2/round-1000/A/main.cpp
-```
+4. **Portabilidade POSIX e Makefiles Silenciosos:**
+    - Scripts de automação devem adotar POSIX `/bin/sh` estrito, cabeçalho `#!/usr/bin/env sh` e redirecionamento seguro `> "/dev/null" 2>&1`.
+    - Makefiles devem conter `.POSIX: .SILENT:` e flags de supressão de ruído.
 
 ---
 
-## 📚 5. Adicionando Novos Algoritmos (`algorithms/`)
+## 🪝 Quality Gates & Ganchos Git com Auto-Cura
 
-Ao implementar um novo algoritmo canônico ou estrutura de dados:
+O repositório adota ganchos defensivos com auto-cura ativa em `.githooks/`:
 
-1. Crie o arquivo de cabeçalho modular em `algorithms/<categoria>/<nome>.hpp`.
-2. Inclua `#pragma once` no início.
-3. Não use `using namespace std;` no arquivo `.hpp`.
-4. Documente o algoritmo no [HANDBOOK.md](file:///home/gabrielfrigo/Documentos/Personal/Competitive%20Computing/HANDBOOK.md) com sua respectiva complexidade temporal e espacial ($\mathcal{O}(N \log N)$).
-5. Inclua o cabeçalho no arquivo de verificação [tests/test_algorithms.cpp](file:///home/gabrielfrigo/Documentos/Personal/Competitive%20Computing/tests/test_algorithms.cpp).
-6. Rode `make test-algorithms` para validar que não há erros nem warnings de compilação com `-std=c++23`.
+- **`.githooks/pre-commit`:**
+    - _Auto-cura de Modos:_ Detecta scripts e binários ajustando permissões para `0755` no disco e no Git Index; normaliza arquivos de texto para `0644`.
+    - _Auto-cura de Formatação:_ Remove trailing whitespaces, executa Prettier em Markdowns e manifestos estruturados, corrige cabeçalhos de banners estruturais e re-adiciona ao stage.
+    - _Quality Gates Estáticos:_ Bloqueia escapes octais (`\033`), redirecionamentos não aspeados (`> /dev/null`), inconsistências de whitespace/conflito e falhas de sintaxe POSIX (`sh -n`).
+- **`.githooks/commit-msg`:**
+    - _Auto-cura de Prefixo:_ Valida o prefixo semântico e formata automaticamente a mensagem com `chore:` se o tipo for omitido ou inválido.
+    - _Validação de Comprimento:_ Garante mensagens significativas com comprimento mínimo de 8 caracteres.
+
+Para executar os quality gates manualmente:
+
+| Comando       | Finalidade Operacional                                           |
+| :------------ | :--------------------------------------------------------------- |
+| `make hooks`  | Instala e ativa os ganchos Git locais com permissão `0755`       |
+| `make format` | Formata todo o repositório com Prettier e ferramentas canônicas  |
+| `make audit`  | Executa suíte estática de integridade, banners e taxonomia       |
+| `make test`   | Executa testes unitários e de integração locais                  |
+| `make ci`     | Executa o pipeline completo de verificação local antes de commit |
 
 ---
 
-## 📝 6. Padrão de Mensagens de Commit
+## 📝 Convenção de Commits Semânticos
 
-O repositório utiliza um hook `commit-msg` que valida o padrão **Conventional Commits**:
+As mensagens de commit devem seguir o padrão:
 
 ```text
-<tipo>(<escopo opcional>): <descrição no imperativo>
+<tipo>(<escopo>): <descrição objetiva>
+```
+
+ou
+
+```text
+<tipo>: <descrição objetiva>
 ```
 
 ### Tipos Permitidos:
 
-- **`solution`**: Adição ou ajuste de solução de maratona ou treino (ex: `solution(codeforces): solve div2 1000 A`).
-- **`algo`**: Nova estrutura ou algoritmo na biblioteca (ex: `algo(graphs): add dinic max flow`).
-- **`feat`**: Nova funcionalidade na CLI ou automações (ex: `feat(cpt): add rust template support`).
-- **`fix`**: Correção de bug em algoritmo, Makefile ou script (ex: `fix(makefile): fix stack-size linker flag`).
-- **`docs`**: Atualização de documentação (ex: `docs(handbook): add fenwick tree tutorial`).
-- **`refactor`**: Refatoração de código sem alterar comportamento.
-- **`test`**: Adição ou alteração de testes unitários.
-- **`chore`**: Tarefas de manutenção, git hooks ou CI/CD.
+| Tipo       | Descrição                                                    |
+| :--------- | :----------------------------------------------------------- |
+| `feat`     | Nova funcionalidade de produto ou sistema                    |
+| `fix`      | Correção de bug ou falha de execução                         |
+| `docs`     | Alterações estritamente em documentação                      |
+| `style`    | Ajustes visuais, formatação de código ou Prettier            |
+| `refactor` | Refatoração de código sem alteração funcional externa        |
+| `perf`     | Otimização de desempenho, latência ou consumo de recursos    |
+| `test`     | Adição ou refatoração de testes automatizados                |
+| `build`    | Alterações no sistema de compilação ou dependências externas |
+| `ci`       | Ajustes em pipelines de CI ou ganchos Git locais             |
+| `chore`    | Tarefas rotineiras de manutenção ou infraestrutura           |
+| `revert`   | Reversão de commit anterior                                  |
+| `sec`      | Correções ou aprimoramentos de segurança e criptografia      |
+| `init`     | Inicialização de repositório, módulo ou estrutura inicial    |
 
 ---
 
-## 🛡️ 7. O que os Git Hooks Protegem?
+## 📖 Referências Obrigatórias
 
-- **`pre-commit`**:
-    - Impede o commit acidental de arquivos executáveis compilados (`main`, `main_bin`, `*.exe`, `*.out`, `*.o`).
-    - Impede commits com conflitos de merge não resolvidos (`<<<<<<<`, `=======`).
-    - Bloqueia arquivos gigantes (> 5MB).
-    - Valida a sintaxe de arquivos Python e C++ alterados.
-- **`commit-msg`**:
-    - Garante que todas as mensagens sigam o padrão Conventional Commits.
-- **`pre-push`**:
-    - Executa `make lint` antes de permitir o envio para o repositório remoto.
+- [README.md](README.md) — Documentação e visão geral do repositório
+- [TODO.md](TODO.md) — Roadmap de desenvolvimento e status operacional
+- [PRINCIPLES.md](PRINCIPLES.md) — Os 22 Princípios de Engenharia Soberanos
+- [AGENTS.md](AGENTS.md) — Manual operacional e briefing para agentes de IA

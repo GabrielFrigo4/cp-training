@@ -1,189 +1,73 @@
-# 🤖 Competitive Computing Hub — AI Agent Briefing
+# 🤖 AI Agent Briefing
 
-> Centro de treinamento, biblioteca de algoritmos e registro de soluções para competições de programação competitiva (ICPC, OBI, Codeforces, AtCoder).
-
----
-
-## 🧭 Identidade e Papel
-
-O repositório **Competitive Programming Hub** (`cp-training`) serve como centro de treinamento e biblioteca canônica de algoritmos:
-
-- **Foco:** Performance extrema, rigor algorítmico, modularidade e automação via terminal Linux.
-- **Linguagens principais:**
-    - **C++23** (linguagem primária para soluções de alta performance e algoritmos canônicos).
-    - **Python 3.12+** (para automação, scripts auxiliares e problemas ad-hoc).
-    - **Rust 2021** (para soluções que exigem segurança de memória e alta velocidade).
-    - **C** (para soluções clássicas e de baixo nível).
+> Diretrizes canônicas, invariantes de engenharia, governança autônoma e protocolo operacional para agentes de inteligência artificial em repositórios do ecossistema.
 
 ---
 
-## 📁 Estrutura do Repositório
+## 🧭 Identidade & Fonte de Contexto
 
-```text
-cp-training/
-├── algorithms/               # Biblioteca canônica de algoritmos e estruturas de dados (.hpp)
-├── competitions/             # Soluções de maratonas oficiais (ICPC, OBI, Seletiva USP, etc.)
-├── practice/                 # Treinamento categorizado por plataforma (Codeforces, AtCoder, etc.)
-├── templates/                # Templates otimizados por linguagem
-├── tools/                    # Ferramenta CLI de produtividade (tools/cpt e tools/cp_tool.py)
-├── tests/                    # Suíte de testes automatizados (CLI e compilação de algoritmos)
-├── docs/                     # Documentação de ambiente e notas
-├── .githooks/                # Git hooks versionados (pre-commit, commit-msg, pre-push)
-├── .agents/                  # Workspace Customizations para agentes (rules e skills)
-├── .github/workflows/        # Workflows de CI/CD (GitHub Actions)
-├── Makefile                  # Makefile centralizado com automações de build, test e lint
-├── HANDBOOK.md               # Caderno consolidado de algoritmos e fórmulas com LaTeX
-├── CONTRIBUTING.md           # Guia de setup e contribuição para novos clones
-├── LEARNING.md               # Roteiro de aprendizagem e tópicos
-├── LICENSE                   # Licença MIT
-├── PRINCIPLES.md             # 22 Princípios de Engenharia adaptados
-├── README.md                 # Visão geral do repositório
-└── TODO.md                   # Backlog de treinamento e matriz de cobertura
-```
+Todo agente de IA que atua neste repositório deve ancorar suas decisões na documentação canônica local antes de executar qualquer alteração. Consulte rigorosamente nesta ordem:
+
+1. [README.md](README.md) — Arquitetura, stack técnica, topologia de diretórios e comandos operacionais específicos do repositório.
+2. [TODO.md](TODO.md) — Matriz de status operacional, cobertura de implementação e roadmap de engenharia.
+3. [PRINCIPLES.md](PRINCIPLES.md) — Os 22 Princípios de Engenharia UNIX e diretrizes estritas de Clean Code.
+4. [CONTRIBUTING.md](CONTRIBUTING.md) — Fluxo Git soberano, convenção de commits semânticos e qualidade local.
+5. `ENVIRONMENT.md` — Arquitetura federada do ecossistema (quando presente na raiz do repositório, como no hub `Environment` e seus submódulos centrais).
 
 ---
 
-## ⚠️ Regras Críticas para Agentes de IA
+## 🤝 Protocolo Bidirecional de Esclarecimento Proativo
 
-### Convenções Técnicas e Flags Canônicas
+A autonomia operacional do agente é guiada pelo princípio de alinhamento contínuo: nunca assuma silenciosamente suposições ambíguas.
 
-### 1. C++23 (GCC)
+### 🏛️ Alinhamento Socrático (Master -> User)
 
-- O padrão obrigatório é **C++23** (`-std=c++23`).
-- **Flags recomendadas de compilação:**
-    ```bash
-    g++ -std=c++23 -O2 -Wall -Wextra -Wl,-z,stack-size=268435456 main.cpp -o main
-    ```
-- **Tamanho de Pilha (Stack Size):** A flag `-Wl,-z,stack-size=268435456` (256 MB) é fundamental em sistemas Linux para evitar _Segmentation Fault_ por estouro de pilha de recursão (como em buscas DFS profundas e Euler Tour).
-- **Fast I/O:** Toda solução C++ deve desvincular as streams padrão:
-    ```cpp
-    std::ios_base::sync_with_stdio(false);
-    std::cin.tie(nullptr);
-    std::cout.tie(nullptr);
-    ```
-- Use `'\n'` em vez de `std::endl` para evitar descargas desnecessárias do buffer.
+Qualquer ambiguidade, inconsistência de requisitos, trade-off arquitetural crítico ou especificação incompleta DEVE ser esclarecido proativamente com o usuário via `ask_question` antes do início da execução em massa. É expressamente proibido adotar suposições silenciosas sobre escopo ou tomar ações destrutivas sem validação prévia.
 
-### 2. Biblioteca Canônica (`algorithms/`)
+### ⚡ Escalonamento de Subagentes (Worker -> Master)
 
-- Mantenha headers modulares com `#pragma once`.
-- Não inclua `using namespace std;` dentro dos headers da pasta `algorithms/`.
-- Cada novo algoritmo implementado deve ser registrado no [HANDBOOK.md](file:///home/gabrielfrigo/Documentos/Personal/Competitive%20Computing/HANDBOOK.md) com sua respectiva complexidade temporal e espacial em LaTeX ($\mathcal{O}(V + E)$, $\mathcal{O}(N \log N)$).
+Subagentes de execução que identificarem qualquer dúvida de escopo, divergência entre especificação e código real, ou risco de efeito colateral inesperado DEVEM interromper a mutação de arquivos e questionar imediatamente o agente orquestrador pai via `send_message`.
 
 ---
 
-### Automação e Ferramentas Disponíveis para o Agente
+## ⚠️ Regras Críticas & Invariantes Soberanas
 
-### 1. Makefile Centralizado
-
-Ao trabalhar no repositório, utilize sempre o Makefile raiz para executar validações:
-
-- `make setup`: Ativa os githooks locais e verifica ferramentas do sistema.
-- `make test`: Roda a suíte completa de testes (CLI Python + Compilação C++23 de todos os algoritmos).
-- `make test-algorithms`: Compila `tests/test_algorithms.cpp` garantindo zero erros e warnings na biblioteca.
-- `make test-tool`: Executa testes unitários de `tools/cp_tool.py`.
-- `make lint`: Verifica ausência de binários e valida sintaxe Python.
-- `make stats`: Exibe estatísticas de problemas resolvidos no repositório.
-- `make clean`: Limpa arquivos temporários (`output.txt`, `main_bin`, etc.).
-
-### 2. Utilitário CLI (`./tools/cpt`)
-
-Para criar novos problemas ou contests:
-
-```bash
-# Criação de contest com múltiplos problemas:
-./tools/cpt new practice/codeforces/normal/div-2/round-1000 A B C D
-
-# Testar um problema contra input.txt e expected.txt:
-./tools/cpt run practice/codeforces/normal/div-2/round-1000/A
-
-# Copiar solução para o clipboard do sistema:
-./tools/cpt clip practice/codeforces/normal/div-2/round-1000/A/main.cpp
-
-# Consultar estatísticas:
-./tools/cpt stats
-```
+1. **Soberania e Isolamento de Repositórios OSS (`**/OSS/**`):** Projetos de terceiros sob diretórios `OSS/` são estritamente somente-leitura para operações globais, templates, formatação ou auditoria, só podendo ser editados sob ordem explícita e nominal do usuário e seguindo as regras do upstream.
+2. **Desacoplamento Bancada vs. Produção & Zero-Dirty Invariant:** Nunca edite clones de produção diretamente (`~/.local/share/*`, `~/.config/*`, `~/.emacs.d`, etc.). Edite exclusivamente na bancada em `~/Documents/`, valide localmente (`make test`, `make ci`), comite e envie via `git push`. A produção recebe atualizações exclusivamente via `git pull` e DEVE manter `git status` 100% limpo a todo momento (Invariante Zero-Dirty).
+3. **Hermetismo de Produção (`rm -rf .agents`):** O ecossistema é soberano e independente de ferramentas de IA. Código de produção (scripts, Makefiles, hooks, dotfiles, compiladores) não depende de `.agents/` ou `skills/`. Se o diretório `.agents/` for deletado, o repositório opera com 100% de sua integridade.
+4. **Invariante Out-of-the-Box (`0755` / `0644` / `0700` / `0600`):** O repositório deve funcionar imediatamente após um simples `git clone`, sem etapas manuais pós-clone. Permissões octais canônicas devem estar registradas no Git Index (`0755` para executáveis/scripts/hooks, `0644` para arquivos de configuração e documentação, `0700`/`0600` para Vault e chaves). Scripts devem aplicar self-healing de permissões em tempo de execução.
+5. **Taxonomia Tripartite de Comentários:** O código adota estritamente três categorias:
+    - _Comentários de Sistema:_ PERMITIDOS (shebangs, pragmas, linters).
+    - _Comentários Estruturais de 64/32 colunas:_ PERMITIDOS (cabeçalhos de 64 `-` `# ----------------------------------------------------------------`, seções de 32 colunas `### ================================` e `### --------------------------------` com títulos em MAIÚSCULO, réguas de 64 `=` em `.gitignore` `# ================================================================` com títulos em MAIÚSCULO, sem vazamento lateral).
+    - _Comentários Explicativos/Narrativos:_ PROIBIDOS em código, arquivos de configuração e blocos de código dentro de Markdowns.
+6. **Portabilidade POSIX, Makefiles Silenciosos & Boy Scout Rule:**
+    - Sintaxe estrita POSIX `/bin/sh` (`#!/usr/bin/env sh`, sem bashismos).
+    - Makefiles silenciosos com `.POSIX: .SILENT:`, `MAKEFLAGS += --no-print-directory -s`, subshells `(cd dir && $(MAKE))` e zero `@` redundante.
+    - Sequências ANSI via `$'\e'` ou notação hexadecimal `\x1b` (nunca octal `\033`).
+    - Redirecionamento seguro envolvendo destinos em aspas duplas (ex: `> "/dev/null" 2>&1`).
+    - Refatoração Clean-Break sem legado (expurgar shims, aliases obsoletos e variáveis mortas).
+    - Simetria de escopo e não-assimetria de subgrupo na documentação.
+    - Emissão semântica de UI via rotinas canônicas `_ui_*`.
+    - **Boy Scout Rule:** Ao identificar qualquer inconformidade com os padrões estabelecidos, notifique concisamente o usuário e aplique a correção de forma proativa.
 
 ---
 
-### Regras de Segurança e Higiene (Guardrails)
+## 🚀 Comandos Canônicos de Verificação (Quality Gates)
 
-1. **NUNCA faça commit de binários compilados:**
-    - O hook `pre-commit` bloqueia extensões como `.exe`, `.out`, `main`, `main_bin`, `.o`, `.a`.
-    - Sempre execute `make clean` antes de preparar commits se gerou binários locais.
-2. **NUNCA commite arquivos de saída de testes:**
-    - Arquivos `output.txt`, `actual.txt`, `diff.txt`, `.tmp` são temporários.
-    - `input.txt` e `expected.txt` são os únicos arquivos de teste persistidos na pasta do problema.
-3. **Padrão de Commit (Conventional Commits):**
-    - O hook `commit-msg` exige mensagens formatadas como:
-        - `solution(codeforces): solve div2 1000 problem A`
-        - `algo(graphs): add dinic max flow`
-        - `feat(tools): enhance cpt test runner`
-        - `docs(handbook): document segment tree complexity`
-        - `fix(makefile): adjust linker flag`
-    - Tipos válidos: `feat`, `fix`, `refactor`, `docs`, `style`, `test`, `chore`, `perf`, `ci`, `solution`, `algo`.
-4. **Preservação de Soluções Existentes:**
-    - Não delete nem quebre soluções já consolidadas ao fazer refatorações ou manutenções na estrutura.
-
-5. **Taxonomia Tripartite de Comentários:** O código adota estritamente três categorias: 1. Comentários de Sistema = PERMITIDOS (shebangs, pragmas, linters); 2. Comentários Estruturais de 64/32 colunas = PERMITIDOS (cabeçalhos de 64 `-`, seções de 32 colunas `### ===` e `### ---` com títulos em MAIÚSCULO, réguas de 64 `=` em `.gitignore` com títulos em MAIÚSCULO, sem vazamento); 3. Comentários Explicativos/Narrativos = PROIBIDOS em código, configs E blocos de código dentro de Markdowns.
-
----
-
----
-
-## 🛡️ Regra da Proatividade e Correção Contínua (Boy Scout Rule)
-
-O agente de IA atua de forma proativa na manutenção e aplicação dos padrões canônicos deste repositório.
-
-Ao identificar linhas ou artefatos fora dos padrões estabelecidos:
-
-1. **Notificar concisamente** o usuário sobre o ajuste realizado.
-2. **Corrigir a inconformidade**, aplicando o padrão correspondente:
-    - **Taxonomia Tripartite de Comentários:** Eliminar comentários explicativos óbvios em código, configs e blocos de código em Markdowns, preservando exclusivamente comentários de sistema e delimitadores estruturais (64/32 colunas).
-    - **Banners Estruturais:** Ajustar réguas para exatamente 64 hífens no topo ou 32 caracteres com `### ` no corpo (ou 64 `=` em `.gitignore`), com títulos sempre em MAIÚSCULO.
-    - **Portabilidade POSIX:** Substituir bashismos (`[[ ]]`, `&>`, arrays, `source`) por sintaxe estrita POSIX `/bin/sh`.
-    - **Shebang Universal:** Garantir sempre `#!/usr/bin/env sh` ou `#!/usr/bin/env python3`.
-    - **Sequências ANSI & Escapes:** Não use octais (`\033`, `\001`) para caracteres ou escapes. Use `[ -t 1 ] && echo -n $\x27\e...\x27` ou notação hexadecimal (`\x01`, `\x1b`). Octal é exclusivo para permissões POSIX (`chmod 0755`, `chmod 0644`, `umask`).
-    - **Redirecionamento Seguro:** Envolver destinos em aspas duplas (ex: `> "/dev/null" 2>&1`).
-    - **Makefiles:** Assegurar cabeçalho `.POSIX: .SILENT:`, `MAKEFLAGS += --no-print-directory -s`, alinhamento estético de variáveis e zero `@` redundante.
-    - **Permissões Canônicas:** Aplicar 4 dígitos octais (`chmod 0755`, `chmod 0644`, `chmod 0700`, `chmod 0600`).
-    - **Invariante Out-of-the-Box:** Garantir modos octais corretos no Git Index e auto-cura em tempo de execução sem requerer intervenção manual pós-clone.
-    - **Emissão Semântica de UI:** Substituir `echo` avulsos com emojis pelas rotinas canônicas `_ui_*`.
-    - **Antifragilidade & Resiliência:** Resolução ativa de caminhos em cascata, auto-cura de permissões (0600 em chaves/segredos) e validação defensiva de pré-requisitos.
-    - **Curadoria Cognitiva:** Capturar decisões estruturais e regras tácitas em skills locais compactas (`.agents/skills/`), mantendo-as atualizadas e expurgando ruído obsoleto.
-    - **Refatoração Sem Legado:** Expurgar aliases obsoletos, variáveis mortas e shims de compatibilidade em renomeações.
-    - **Elevação Antifrágil & Shift Seguro:** Usar o bloco explícito `if [ "$(id -u)" -ne 0 ]` para resolução de `ELEVATE` (evitando término fatal sob `set -e` como root) e proteger todo comando `shift` com validação prévia de parâmetros (`[ "$#" -ge N ] && shift N`).
-    - **Simetria de Documentação:** Mover regras ou invariantes universais documentadas erroneamente em sub-membros específicos para o documento de arquitetura do grupo correspondente, eliminando falsas assimetrias.
-
----
-
-## 🚀 Comandos de Verificação Rápida (Quality Gates)
-
-| Comando               | Finalidade Operacional                                               |
-| :-------------------- | :------------------------------------------------------------------- |
-| `make help`           | Exibe o catálogo completo de tarefas operacionais                    |
-| `make setup`          | Configura permissões e ganchos em `.githooks/`                       |
-| `make test`           | Executa a suíte completa de testes automatizados                     |
-| `make lint`           | Valida linters e integridade estática do repositório                 |
-| `make check-binaries` | Verifica se existem binários compilados indevidamente no repositório |
-| `make format`         | Aplica formatação automática em arquivos de código                   |
-| `make prettier`       | Formata arquivos Markdown e JSON com Prettier                        |
-| `make clean`          | Remove binários compilados, saídas de teste e temporários            |
-| `make ci`             | Executa a pipeline local completa de validação integrada             |
+| Comando       | Finalidade Operacional                                           |
+| :------------ | :--------------------------------------------------------------- |
+| `make help`   | Exibe o catálogo interativo de comandos disponíveis              |
+| `make test`   | Executa a suíte automatizada de testes locais                    |
+| `make audit`  | Executa as suítes de auditoria estática de padrões e integridade |
+| `make format` | Formata código-fonte e documentações com Prettier e linters      |
+| `make ci`     | Executa a pipeline local completa de validação integrada         |
+| `make hooks`  | Configura e ativa os ganchos Git com permissões canônicas (0755) |
 
 ---
 
 ## 📖 Referências Obrigatórias
 
-Antes de qualquer modificação neste ecossistema, consulte:
-
-- [README.md](README.md) — Visão geral e catálogo do treinamento
-- [PRINCIPLES.md](PRINCIPLES.md) — 22 Princípios de Engenharia adaptados
-- [HANDBOOK.md](HANDBOOK.md) — Caderno consolidado de algoritmos e fórmulas
-- [CONTRIBUTING.md](CONTRIBUTING.md) — Guia de contribuição e convenções locais
-- [LEARNING.md](LEARNING.md) — Roteiro de aprendizagem e tópicos competitivos
-- [TODO.md](TODO.md) — Backlog de treino e matriz de cobertura
-- [LICENSE](LICENSE) — Licença MIT do projeto
-- [Makefile](Makefile) — Catálogo de automação e scripts de build
-- [.agents/rules/code-hygiene.md](.agents/rules/code-hygiene.md) — Diretrizes de higiene de código
-- [.agents/rules/competitive-programming.md](.agents/rules/competitive-programming.md) — Convenções de CP
-- [.agents/skills/icpc-competitive-engineering/SKILL.md](.agents/skills/icpc-competitive-engineering/SKILL.md) — Runbook de engenharia competitiva
+- [README.md](README.md) — Visão geral, arquitetura e stack técnica
+- [TODO.md](TODO.md) — Roadmap de tarefas e matriz de cobertura
+- [PRINCIPLES.md](PRINCIPLES.md) — Os 22 Princípios de Engenharia Soberanos
+- [CONTRIBUTING.md](CONTRIBUTING.md) — Guia de contribuição, fluxo Git e convenções

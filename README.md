@@ -116,28 +116,37 @@ O repositório inclui um utilitário CLI em Python (`./tools/cpt`) sem dependên
 
 ### 1. Criar novo Contest ou Problema
 
-```sh
-# Cria uma pasta para o contest com problemas A, B, C, D e templates prontos
-./tools/cpt new practice/codeforces/normal/div-2/round-1000 A B C D E
+Criação de pasta para o contest com problemas A, B, C, D e templates C++ prontos:
 
-# Cria com template Python
+```sh
+./tools/cpt new practice/codeforces/normal/div-2/round-1000 A B C D E
+```
+
+Criação com template Python:
+
+```sh
 ./tools/cpt new practice/atcoder/beginner/abc-350 A B C --lang py
 ```
 
 ### 2. Compilar, Executar e Testar
 
-```sh
-# Compila e roda o problema atual com o input.txt da pasta
-./tools/cpt run practice/codeforces/normal/div-2/round-1000/A
+Compilação e execução com o `input.txt` da pasta:
 
-# Se houver expected.txt, valida automaticamente o AC ou WA com diff
+```sh
+./tools/cpt run practice/codeforces/normal/div-2/round-1000/A
+```
+
+Validação automática de AC ou WA com diff quando houver `expected.txt`:
+
+```sh
 ./tools/cpt test
 ```
 
 ### 3. Copiar Código para o Clipboard (1 comando)
 
+Detecção automática de `wl-copy` (Wayland), `xclip` (X11) ou `clip.exe` (WSL/Windows):
+
 ```sh
-# Detecta wl-copy (Wayland), xclip (X11) ou clip.exe (WSL/Windows)
 ./tools/cpt clip practice/codeforces/normal/div-2/round-1000/A/main.cpp
 ```
 

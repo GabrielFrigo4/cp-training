@@ -13,7 +13,6 @@ import subprocess
 from pathlib import Path
 import difflib
 
-# ANSI Colors
 RESET = "\x1b[0m"
 BOLD = "\x1b[1m"
 GREEN = "\x1b[92m"

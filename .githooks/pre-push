@@ -4,23 +4,33 @@
 # License: MIT (c) 2026 GabrielFrigo
 # ----------------------------------------------------------------
 
-set -e
+set -eu
 
-printf "\033[36m[pre-push] Executando verificação de integridade antes do envio...\033[0m\n"
+if [ -t 1 ]; then
+	COLOR_INFO="\x1b[36m"
+	COLOR_OK="\x1b[32m"
+	COLOR_RESET="\x1b[0m"
+else
+	COLOR_INFO=""
+	COLOR_OK=""
+	COLOR_RESET=""
+fi
+
+printf "%b[pre-push] Executando verificação de integridade antes do envio...%b\n" "${COLOR_INFO}" "${COLOR_RESET}"
 
 _repo_root="$(git rev-parse --show-toplevel 2> "/dev/null" || pwd)"
 
 if [ -f "${_repo_root}/Makefile" ]; then
 	if command -v gmake > "/dev/null" 2>&1; then
-		gmake -C "${_repo_root}" lint --no-print-directory
+		(cd "${_repo_root}" && gmake lint --no-print-directory)
 	elif make --version 2>&1 | grep -qi "gnu"; then
-		make -C "${_repo_root}" lint --no-print-directory
+		(cd "${_repo_root}" && make lint --no-print-directory)
 	else
-		make -C "${_repo_root}" lint -s
+		(cd "${_repo_root}" && make lint -s)
 	fi
 else
-	printf "\033[32mMakefile não encontrado, pulando pre-push checks.\033[0m\n"
+	printf "%bMakefile não encontrado, pulando pre-push checks.%b\n" "${COLOR_OK}" "${COLOR_RESET}"
 fi
 
-printf "\033[32m✔ [pre-push] Verificações concluídas! Prosseguindo com o push.\033[0m\n"
+printf "%b✔ [pre-push] Verificações concluídas! Prosseguindo com o push.%b\n" "${COLOR_OK}" "${COLOR_RESET}"
 exit 0

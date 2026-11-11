@@ -19,10 +19,14 @@ Problemas de treino organizados por plataformas e juízes online (Online Judges)
 
 ## 🚀 Como Criar e Rodar Novos Treinos
 
-```bash
-# Criar um novo round do Codeforces Div 3 com problemas A, B, C, D, E
-./tools/cpt new practice/codeforces/normal/div-3/round-1005 A B C D E
+Criação de um novo round do Codeforces Div 3 com problemas A, B, C, D, E:
 
-# Rodar e testar o problema A
+```bash
+./tools/cpt new practice/codeforces/normal/div-3/round-1005 A B C D E
+```
+
+Execução e teste do problema A:
+
+```bash
 ./tools/cpt run practice/codeforces/normal/div-3/round-1005/A
 ```

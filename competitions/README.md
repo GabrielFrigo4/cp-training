@@ -20,9 +20,8 @@ Repositório de soluções, cadernos de questões e materiais de estudo para com
 
 ## 🚀 Como Executar Soluções
 
-Você pode testar qualquer solução utilizando o helper CLI:
+Você pode testar qualquer solução utilizando o helper CLI (exemplo com o problema A da Seletiva UFABC 2026):
 
 ```bash
-# Exemplo: Rodar o problema A da Seletiva UFABC 2026
 ./tools/cpt run competitions/seletiva-ufabc/2026/A
 ```

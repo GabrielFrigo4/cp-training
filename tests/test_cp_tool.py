@@ -34,7 +34,6 @@ class TestCPTool(unittest.TestCase):
             tmppath = Path(tmpdir)
             target = tmppath / "problem_a"
 
-            # Simula cpt new
             class ArgsNew:
                 path = str(target)
                 problems = ["A"]
@@ -50,12 +49,10 @@ class TestCPTool(unittest.TestCase):
             self.assertTrue((prob_dir / "expected.txt").exists())
             self.assertTrue((prob_dir / "Makefile").exists())
 
-            # Escreve código python de teste
             (prob_dir / "main.py").write_text("a = input().strip()\nprint(f'Hello {a}')\n")
             (prob_dir / "input.txt").write_text("World\n")
             (prob_dir / "expected.txt").write_text("Hello World\n")
 
-            # Executa cp_tool run
             res = subprocess.run(
                 [sys.executable, str(REPO_ROOT / "tools" / "cp_tool.py"), "run", str(prob_dir)],
                 capture_output=True,

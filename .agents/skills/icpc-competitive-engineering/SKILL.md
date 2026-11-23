@@ -11,12 +11,12 @@ Este runbook instrui agentes autônomos na concepção, otimização, teste adve
 
 Soluções em C++ MUST utilizar o padrão C++23 (`-std=c++23`) com flags de otimização e pilha:
 
-```bash
+```sh
 g++ -std=c++23 -O2 -Wall -Wextra -Wconversion -Wshadow -fsanitize=undefined \
     -Wl,-z,stack-size=268435456 main.cpp -o main
 ```
 
-Todo programa C++ MUST desvincular as streams padrão e MUST NOT usar `std::endl`:
+Todo programa C++ MUST desvincular as streams padrão e MUST NOT usar `std::endl`, utilizando `'\n'` para evitar flush síncrono:
 
 ```cpp
 #include <bits/stdc++.h>
@@ -29,7 +29,6 @@ void fast_io() {
 
 int main() {
     fast_io();
-    // Use '\n' em vez de endl para evitar flush síncrono
     return 0;
 }
 ```
@@ -42,15 +41,15 @@ int main() {
 ### Automação via CLI (`./tools/cpt`) e Makefile
 
 - **Criação de Problemas/Contests:**
-    ```bash
+    ```sh
     ./tools/cpt new practice/codeforces/normal/div-2/round-1000 A B C D E
     ```
-- **Execução e Validação:**
-    ```bash
-    ./tools/cpt run <caminho_do_problema>   # ou `make test` dentro da pasta
+- **Execução e Validação (ou `make test` dentro da pasta):**
+    ```sh
+    ./tools/cpt run <caminho_do_problema>
     ```
 - **Clipboard para Submissão:**
-    ```bash
+    ```sh
     ./tools/cpt clip <caminho_do_problema>/main.cpp
     ```
 
@@ -74,7 +73,7 @@ Quando uma solução apresentar Wrong Answer (WA) em testes ocultos, agentes MUS
     ```
 2. **Solução Força-Bruta (`brute.cpp`):** Algoritmo garantidamente correto ($\mathcal{O}(N!)$ ou $\mathcal{O}(N^2)$).
 3. **Loop de Verificação Automatizado (`stress.sh`):**
-    ```bash
+    ```sh
     while true; do
         python3 gen.py > in.txt
         ./main < in.txt > out_opt.txt
